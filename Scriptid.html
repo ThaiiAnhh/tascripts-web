@@ -27,8 +27,6 @@
 </head>
 <body class="antialiased overflow-x-hidden custom-scrollbar">
 
-    <body class="bg-[#0a0a0f] overflow-x-hidden font-sans">
-
     <div id="top-announcement" class="relative px-4 py-2.5 flex items-center justify-center gap-4 flex-wrap bg-slate-900/80 border-b border-white/5 z-[60] backdrop-blur-sm">
         <div class="flex items-center gap-2 text-sm text-gray-300">
             <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse flex-shrink-0"></span>
@@ -36,186 +34,57 @@
             <span class="sm:hidden font-medium text-xs">Script mới mỗi ngày!</span>
         </div>
         <div class="flex items-center gap-2">
-            <a href="https://discord.gg/dbVjXAazCU" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#5865F2]/20 hover:bg-[#5865F2]/40 border border-[#5865F2]/40 text-[#7b8dff] hover:text-white transition-all text-xs font-bold">
-                <i class="ri-discord-line text-sm"></i>
-                <span>Discord</span>
-                <span class="hidden sm:inline text-[#5865F2]/70 font-normal">• 12.4K</span>
+            <a href="https://discord.gg/dbVjXAazCU" target="_blank" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#5865F2]/20 hover:bg-[#5865F2]/40 border border-[#5865F2]/40 text-[#7b8dff] hover:text-white transition-all text-xs font-bold">
+                <i class="ri-discord-line"></i> Discord
             </a>
-            <a href="https://www.youtube.com/@tagamerr" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600/20 hover:bg-red-600/40 border border-red-500/40 text-red-400 hover:text-white transition-all text-xs font-bold">
-                <i class="ri-youtube-line text-sm"></i>
-                <span>YouTube</span>
-                <span class="hidden sm:inline text-red-500/70 font-normal">• 85K</span>
+            <a href="https://www.youtube.com/@tagamerr" target="_blank" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600/20 hover:bg-red-600/40 border border-red-500/40 text-red-400 hover:text-white transition-all text-xs font-bold">
+                <i class="ri-youtube-line"></i> YouTube
             </a>
         </div>
-        <button onclick="document.getElementById('top-announcement').remove()" class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/10 text-gray-500 hover:text-white transition-all">
-            <i class="ri-close-line text-sm"></i>
-        </button>
+        <button onclick="this.parentElement.remove()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"><i class="ri-close-line"></i></button>
     </div>
 
     <nav class="px-6 lg:px-12 h-16 flex items-center justify-between bg-slate-900/50 backdrop-blur-md border-b border-white/5 sticky top-0 z-50">
-        <div class="flex items-center w-1/4">
-            <a class="flex items-center gap-2.5 cursor-pointer group" href="/index.html">
-                <div class="w-10 h-10 rounded-xl overflow-hidden ring-2 ring-cyan-500/30 group-hover:ring-cyan-500/60 transition-all">
-                    <img alt="Logo" class="w-full h-full object-cover" src="image/logo.png">
-                </div>
-                <span class="text-white font-black text-lg tracking-tight uppercase group-hover:text-cyan-400 transition-colors">TAScripts</span>
-            </a>
-        </div>
-
-        <div class="hidden md:flex flex-1 justify-center items-center gap-7">
-            <a class="text-gray-300 hover:text-cyan-400 transition-colors text-sm font-medium" href="/index.html">Home</a>
-            <a class="text-gray-300 hover:text-cyan-400 transition-colors text-sm font-medium" href="/Executors.html">Executors</a>
-            <a class="text-gray-300 hover:text-cyan-400 transition-colors text-sm font-medium flex items-center gap-1" href="/Collaborate.html">
-                <i class="ri-send-plane-line text-xs"></i> Collaborate
-            </a>
-            <a id="admin-nav-btn" class="hidden text-yellow-400 hover:text-yellow-300 transition-colors text-sm font-medium" href="Admin.html">
-    <i class="ri-shield-star-line mr-1"></i> Admin
-</a>
-        </div>
-
-        <div class="flex items-center gap-3 justify-end w-1/4">
-            
-            <div id="search-wrapper" class="flex items-center bg-white/5 border border-white/10 rounded-lg transition-all duration-300 ease-in-out group focus-within:border-cyan-500/50">
-                <input id="search-input" type="text" placeholder="Tìm script..." class="w-0 opacity-0 pointer-events-none bg-transparent text-white text-sm py-1.5 px-0 focus:outline-none transition-all duration-300 ease-in-out">
-                <button id="search-trigger" class="w-9 h-9 flex items-center justify-center text-gray-400 hover:text-cyan-400 transition-all cursor-pointer flex-shrink-0">
-                    <i id="search-icon" class="ri-search-line text-base"></i>
-                </button>
+        <a class="flex items-center gap-2.5 group" href="index.html">
+            <div class="w-10 h-10 rounded-xl overflow-hidden ring-2 ring-cyan-500/30">
+                <img src="image/logo.png" class="w-full h-full object-cover">
             </div>
-
-            <div class="relative">
-                <button id="notification-trigger" class="relative w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-cyan-400 transition-all border border-white/10" aria-label="Thông báo">
-                    <i class="ri-notification-3-line text-base"></i>
-                    <span class="absolute -top-1 -right-1 w-4 h-4 flex items-center justify-center bg-red-500 text-white text-[9px] font-black rounded-full ring-2 ring-[#07070c]">6</span>
-                </button>
-
-                <div id="notification-dropdown" class="hidden absolute top-full right-0 mt-3 w-[320px] bg-[#111118] border border-white/10 rounded-xl overflow-hidden z-50 shadow-2xl">
-                    <div class="flex items-center justify-between px-4 py-3 border-b border-white/8">
-                        <div class="flex items-center gap-2">
-                            <i class="ri-notification-3-line text-cyan-400 text-sm"></i>
-                            <span class="text-white font-bold text-sm">Thông Báo</span>
-                            <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-red-500/20 text-red-400 border border-red-500/20">6 mới</span>
-                        </div>
-                        <button class="text-xs text-cyan-400 hover:text-cyan-300 transition-colors">Xem hết</button>
-                    </div>
-                    <div class="max-h-[360px] overflow-y-auto">
-                        <button class="w-full flex items-start gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left border-b border-white/5 bg-cyan-500/[0.03]">
-                            <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 bg-cyan-500/15 text-cyan-400 border border-cyan-500/20">
-                                <i class="ri-notification-3-line text-sm"></i>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="text-xs font-bold text-white truncate">Chào mừng đến TA Scripts!</p>
-                                <p class="text-gray-500 text-[11px] mt-0.5 line-clamp-2">Tham gia Discord để nhận hỗ trợ kỹ thuật.</p>
-                                <p class="text-gray-600 text-[9px] mt-1">2026-03-28</p>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="auth-section" class="flex items-center">
-    <a id="login-btn" href="/login.html" class="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 transition-all text-sm font-bold whitespace-nowrap">
-        <i class="ri-login-box-line"></i> <span class="hidden sm:inline">Đăng Nhập</span>
-    </a>
-
-    <div id="user-info" class="hidden items-center gap-2 bg-white/5 border border-white/10 py-1 pl-1 pr-3 rounded-full hover:bg-white/10 transition-all cursor-pointer ring-1 ring-transparent hover:ring-cyan-500/30 ml-2" onclick="location.href='/profile.html'">
-        <div class="w-8 h-8 rounded-full overflow-hidden ring-2 ring-cyan-500/30 flex-shrink-0">
-            <img id="nav-user-avatar" src="image/default-avatar.png" alt="Avatar" class="w-full h-full object-cover">
+            <span class="text-white font-black text-lg tracking-tight uppercase group-hover:text-cyan-400 transition-colors">TAScripts</span>
+        </a>
+        <div class="hidden md:flex gap-7">
         </div>
         
-        <span id="nav-user-name" class="text-white text-[11px] font-black uppercase tracking-tight block whitespace-nowrap overflow-hidden text-ellipsis max-w-[70px] md:max-w-[100px]">
-    TênNgườiDùngCựcKỳDàiCủaBạnỞĐây
-</span>
-    </div>
-</div>
-
-            <button class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 text-gray-300 border border-white/10">
-                <i class="ri-menu-line text-lg"></i>
-            </button>
-        </div>
     </nav>
-
-    <script>
-        // --- Notification Logic ---
-        const notiTrigger = document.getElementById('notification-trigger');
-        const notiDropdown = document.getElementById('notification-dropdown');
-
-        notiTrigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            notiDropdown.classList.toggle('hidden');
-            if(typeof closeSearch === 'function') closeSearch(); 
-        });
-
-        // --- Search Logic ---
-        const searchTrigger = document.getElementById('search-trigger');
-        const searchInput = document.getElementById('search-input');
-        const searchWrapper = document.getElementById('search-wrapper');
-        const searchIcon = document.getElementById('search-icon');
-
-        function closeSearch() {
-            searchInput.classList.add('w-0', 'opacity-0', 'pointer-events-none', 'px-0');
-            searchInput.classList.remove('w-[180px]', 'opacity-100', 'px-3');
-            searchIcon.classList.replace('ri-close-line', 'ri-search-line');
-            searchWrapper.classList.remove('bg-[#0a0a0f]/90', 'border-cyan-500/50');
-            searchInput.value = "";
-        }
-
-        searchTrigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isClosed = searchInput.classList.contains('w-0');
-            if (isClosed) {
-                searchInput.classList.remove('w-0', 'opacity-0', 'pointer-events-none', 'px-0');
-                searchInput.classList.add('w-[180px]', 'opacity-100', 'px-3');
-                searchIcon.classList.replace('ri-search-line', 'ri-close-line');
-                searchWrapper.classList.add('bg-[#0a0a0f]/90', 'border-cyan-500/50');
-                searchInput.focus();
-                notiDropdown.classList.add('hidden');
-            } else if (searchInput.value.trim() === "") {
-                closeSearch();
-            } else {
-                console.log("Searching for:", searchInput.value);
-            }
-        });
-
-        // --- Global Events ---
-        document.addEventListener('click', (e) => {
-            if (!notiDropdown.contains(e.target) && e.target !== notiTrigger) {
-                notiDropdown.classList.add('hidden');
-            }
-            if (!searchWrapper.contains(e.target)) {
-                closeSearch();
-            }
-        });
-    </script>
-</body>
 
     <nav class="max-w-7xl mx-auto px-4 py-6 text-[11px] flex items-center gap-2 animate-fade-in">
         <a href="index.html" class="hover:text-white transition flex items-center gap-1"><i class="ri-home-4-line"></i> Trang Chủ</a>
         <i class="ri-arrow-right-s-line text-gray-700"></i>
-        <span id="breadcrumb-game" class="text-gray-400">Đang tải...</span>
+        <span id="breadcrumb-game" class="text-gray-400">Loading...</span>
     </nav>
 
     <main class="max-w-7xl mx-auto px-4 py-2 mb-20">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
             <div class="lg:col-span-8 space-y-8 animate-fade-in">
                 <div class="space-y-4">
                     <div class="flex items-center gap-2">
-                        <span id="script-badge" class="bg-yellow-500 text-black text-[10px] font-black px-2 py-0.5 rounded shadow-sm uppercase">Loading</span>
+                        <span id="script-badge" class="bg-yellow-500 text-black text-[10px] font-black px-2 py-0.5 rounded uppercase">Loading</span>
                         <span class="bg-cyan-500/10 text-cyan-400 text-[10px] font-bold px-2 py-0.5 rounded border border-cyan-500/20 uppercase">Verified Script</span>
                     </div>
-                    <h1 id="script-title" class="text-white text-4xl font-extrabold tracking-tight leading-tight">Đang tải tiêu đề...</h1>
+                    <h1 id="script-title" class="text-white text-4xl font-extrabold tracking-tight">Đang tải tiêu đề...</h1>
                     
                     <div class="flex flex-wrap items-center gap-6 text-sm">
-                        <div class="flex items-center gap-2">
-                            <div id="author-avatar" class="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-500 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white/5">TA</div>
-                            <div>
-                                <p id="script-author" class="text-white font-semibold leading-none">Admin</p>
-                                <p class="text-[10px] text-gray-500 mt-1 uppercase">Top Developer</p>
-                            </div>
-                        </div>
-                        <div class="h-8 w-px bg-white/5 hidden md:block"></div>
+                       <div class="flex items-center gap-2">
+    <div class="w-9 h-9 rounded-full overflow-hidden ring-2 ring-white/10 flex-shrink-0">
+        <img id="script-author-logo" src="image/logo.png" class="w-full h-full object-cover" onerror="this.src='image/logo.png'">
+    </div>
+    
+    <div>
+        <p id="script-author" class="text-white font-semibold leading-none text-sm">TA Gamer</p>
+        <p class="text-[10px] text-gray-500 mt-1 uppercase tracking-wider">Youtuber</p>
+    </div>
+</div>
                         <div class="flex items-center gap-1.5 text-yellow-400 font-bold">
-                            <i class="ri-star-fill"></i> <span id="script-rating">4.8</span>
+                            <i class="ri-star-fill"></i> <span id="script-rating">5.0</span>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <i class="ri-download-cloud-2-line text-cyan-500"></i> <span id="script-views" class="text-white font-medium">0</span>
@@ -231,30 +100,23 @@
                     <h2 class="text-white font-bold mb-4 flex items-center gap-2 text-lg">
                         <i class="ri-article-line text-cyan-400"></i> Tính Năng Script
                     </h2>
-                    <div id="script-features" class="grid md:grid-cols-2 gap-4 text-sm leading-relaxed">
-                        </div>
+                    <div id="script-features" class="grid md:grid-cols-2 gap-4 text-sm leading-relaxed"></div>
                 </section>
 
-                <section class="card-bg rounded-2xl overflow-hidden shadow-2xl border-cyan-500/10">
-                    <div class="border-b border-[#26272e] px-6 py-4 flex items-center justify-between bg-white/5">
-                        <div class="flex items-center gap-2">
-                            <i class="ri-code-box-line text-cyan-400 text-lg"></i>
-                            <span class="text-white font-bold text-sm tracking-wide uppercase">Khu vực nhận mã</span>
-                        </div>
+                <section class="card-bg rounded-2xl overflow-hidden shadow-2xl border-cyan-500/10 text-center p-10 space-y-6">
+                    <div class="w-20 h-20 bg-cyan-500/10 rounded-3xl flex items-center justify-center ring-1 ring-cyan-500/30 mx-auto transform rotate-3">
+                        <i class="ri-terminal-window-line text-cyan-400 text-4xl"></i>
                     </div>
-                    <div class="p-10 flex flex-col items-center justify-center text-center space-y-6">
-                        <div class="w-20 h-20 bg-cyan-500/10 rounded-3xl flex items-center justify-center ring-1 ring-cyan-500/30 transform rotate-3">
-                            <i class="ri-terminal-window-line text-cyan-400 text-4xl"></i>
-                        </div>
-                        <div class="max-w-xs">
-                            <p class="text-white font-black text-xl mb-2">An toàn & Miễn phí</p>
-                            <p class="text-xs text-gray-500">Vui lòng vượt qua liên kết rút gọn để ủng hộ tác giả duy trì script.</p>
-                        </div>
-                        <a id="get-script-btn" href="#" target="_blank" class="btn-cyan text-white px-12 py-4 rounded-2xl font-black text-sm tracking-[0.1em] flex items-center gap-3 group">
-                            <i class="ri-external-link-line group-hover:rotate-45 transition-transform"></i> GET SCRIPT NOW
-                        </a>
+                    <div>
+                        <p class="text-white font-black text-xl mb-2">An toàn & Miễn phí</p>
+                        <p class="text-xs text-gray-500">Vui lòng ủng hộ tác giả bằng cách Get Script.</p>
                     </div>
+                    <a id="get-script-btn" href="#" target="_blank" class="btn-cyan text-white px-12 py-4 rounded-2xl font-black text-sm inline-flex items-center gap-3">
+                        <i class="ri-external-link-line"></i> GET SCRIPT NOW
+                    </a>
                 </section>
+
+                
             </div>
 
             <div class="lg:col-span-4 space-y-8 animate-fade-in" style="animation-delay: 0.2s;">
@@ -268,14 +130,6 @@
                             <span id="stat-game" class="text-white font-bold">---</span>
                         </div>
                         <div class="flex justify-between py-2 border-b border-white/5">
-                            <span class="text-gray-600">Phiên bản</span>
-                            <span class="text-cyan-400 font-bold bg-cyan-500/10 px-2 py-0.5 rounded">v3.1.2</span>
-                        </div>
-                        <div class="flex justify-between py-2 border-b border-white/5">
-                            <span class="text-gray-600">Người đăng</span>
-                            <span id="stat-author" class="text-white font-bold">Admin</span>
-                        </div>
-                        <div class="flex justify-between py-2 border-b border-white/5">
                             <span class="text-gray-600">Trạng thái</span>
                             <span class="text-emerald-500 font-black">HOẠT ĐỘNG TỐT</span>
                         </div>
@@ -285,48 +139,116 @@
                 <section class="card-bg rounded-2xl overflow-hidden shadow-xl">
                     <div class="px-5 py-4 border-b border-[#26272e] flex items-center bg-white/5 gap-2">
                         <i class="ri-play-circle-line text-red-500"></i>
-                        <span class="text-white font-bold text-xs uppercase tracking-wider">Video hướng dẫn</span>
+                        <span class="text-white font-bold text-xs uppercase">Video hướng dẫn</span>
                     </div>
                     <div class="p-5">
-                        <div id="youtube-preview" class="aspect-video bg-black rounded-xl overflow-hidden border border-white/5 cursor-pointer relative group">
+                        <div id="youtube-preview" class="aspect-video bg-black rounded-xl overflow-hidden relative group">
                             </div>
                     </div>
                 </section>
             </div>
         </div>
-        <div class="mt-10 p-6 rounded-2xl bg-white/5 border border-white/5">
-    <h3 class="text-white font-bold text-lg mb-6 flex items-center gap-2">
-        <i class="ri-star-fill text-yellow-500"></i> Đánh Giá Từ Người Dùng
-    </h3>
-
-    <div class="space-y-4 mb-8 pb-8 border-b border-white/5">
-    <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-            <span class="text-gray-400 text-sm">Đánh giá với tên:</span>
-            <span id="display-username" class="text-cyan-400 font-bold text-sm bg-cyan-500/10 px-3 py-1 rounded-lg border border-cyan-500/20">Khách</span>
-        </div>
-        <div id="star-rating" class="flex gap-1">
-            <i class="ri-star-line text-xl text-gray-600 cursor-pointer hover:text-yellow-500 transition-colors" data-value="1"></i>
-            <i class="ri-star-line text-xl text-gray-600 cursor-pointer hover:text-yellow-500 transition-colors" data-value="2"></i>
-            <i class="ri-star-line text-xl text-gray-600 cursor-pointer hover:text-yellow-500 transition-colors" data-value="3"></i>
-            <i class="ri-star-line text-xl text-gray-600 cursor-pointer hover:text-yellow-500 transition-colors" data-value="4"></i>
-            <i class="ri-star-line text-xl text-gray-600 cursor-pointer hover:text-yellow-500 transition-colors" data-value="5"></i>
-        </div>
-    </div>
-    <textarea id="review-content" class="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white text-sm focus:border-cyan-500 outline-none transition-all" rows="3" placeholder="Script này dùng tốt không Thái Anh?"></textarea>
-    <button onclick="submitReview()" class="px-6 py-2.5 bg-cyan-500 text-black font-black text-xs uppercase rounded-lg hover:bg-cyan-400 transition-all shadow-lg shadow-cyan-500/20">Gửi Đánh Giá</button>
-</div>
-
-<div id="reviews-list" class="space-y-6">
-    </div>
-    <textarea id="review-content" class="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white text-sm focus:border-cyan-500 outline-none transition-all" rows="3" placeholder="Viết cảm nhận của bạn về script này..."></textarea>
-    <button onclick="submitReview()" class="px-6 py-2.5 bg-cyan-500 text-black font-black text-xs uppercase rounded-lg hover:bg-cyan-400 transition-all">Gửi Đánh Giá</button>
-</div>
-
-    <div id="reviews-list" class="space-y-6">
-        </div>
-</div>
     </main>
+
+    <script src="database.js"></script>
+    <script>
+    let selectedStars = 0;
+        const urlParams = new URLSearchParams(window.location.search);
+        const scriptId = urlParams.get('id');
+
+        // HÀM LẤY DỮ LIỆU TỔNG HỢP (Giống trang Index)
+        async function getScriptDetail() {
+            // 1. Lấy từ LocalStorage
+            const localScripts = JSON.parse(localStorage.getItem('myScripts')) || JSON.parse(localStorage.getItem('admin_scripts')) || [];
+            
+            // 2. Lấy từ file JSON
+            let apiScripts = [];
+            try {
+                const response = await fetch(`scripts-data.json?v=${Date.now()}`);
+                if (response.ok) apiScripts = await response.json();
+            } catch (e) {
+                console.warn("Không tìm thấy file JSON");
+            }
+
+            // Gộp tất cả lại để tìm
+            const allScripts = [...localScripts, ...apiScripts];
+            // Tìm script có ID trùng với ID trên URL
+            return allScripts.find(s => (s.id == scriptId || s.ID == scriptId));
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const scriptData = await getScriptDetail();
+
+            if (!scriptData) {
+                // Xử lý lỗi nếu không thấy script...
+                return;
+            }
+
+            // 1. Hiển thị tiêu đề và Breadcrumb
+            document.getElementById('page-title').innerText = `${scriptData.name || scriptData.title} | TAScripts`;
+            document.getElementById('breadcrumb-game').innerText = scriptData.category || scriptData.game || "Roblox";
+            
+            // 2. Badge (HOT, NEW, VERIFIED)
+            const badgeEl = document.getElementById('script-badge');
+            badgeEl.innerText = scriptData.badge || 'New';
+            if(scriptData.badge === 'HOT') badgeEl.className = "bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded uppercase";
+
+            // 3. Thông tin chính
+            document.getElementById('script-title').innerText = scriptData.name || scriptData.title;
+            document.getElementById('script-views').innerText = (scriptData.downloads || 0).toLocaleString();
+            document.getElementById('script-rating').innerText = scriptData.rating || "5.0";
+
+            // 4. XỬ LÝ ẢNH THUMBNAIL (Sửa lỗi ảnh không hiện)
+            let displayThumb = scriptData.thumbnail || scriptData.thumb || scriptData.image || 'image/background.jpg';
+            if (!displayThumb.startsWith('http') && !displayThumb.startsWith('data:') && !displayThumb.startsWith('/')) {
+                displayThumb = 'image/' + displayThumb; 
+            }
+            document.getElementById('script-banner').src = displayThumb;
+
+            // 5. NÚT GET SCRIPT NOW (Dẫn tới link tải)
+            const getBtn = document.getElementById('get-script-btn');
+            getBtn.href = scriptData.link || scriptData.getlink || "#";
+
+            // 6. THỐNG KÊ CHI TIẾT (Hiện rõ nội dung)
+            document.getElementById('stat-game').innerText = scriptData.category || scriptData.game || "Roblox";
+            // Bạn có thể thêm các dòng thống kê khác ở đây nếu cần
+
+            // 7. TÍNH NĂNG SCRIPT (Render Tags)
+            const features = scriptData.tags || ["No Key", "Auto Farm"];
+            document.getElementById('script-features').innerHTML = features.map(f => `
+                <div class="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10">
+                    <i class="ri-checkbox-circle-fill text-cyan-500 text-lg"></i>
+                    <span class="text-gray-300 font-medium">${f}</span>
+                </div>`).join('');
+
+            // 8. VIDEO HƯỚNG DẪN (YouTube)
+            const ytContainer = document.getElementById('youtube-preview');
+            const ytUrl = scriptData.youtube || scriptData.yt;
+            if (ytUrl && ytUrl !== "#") {
+                // Tách ID youtube từ link
+                let vId = ytUrl.includes('v=') ? ytUrl.split('v=')[1].split('&')[0] : ytUrl.split('/').pop();
+                
+                ytContainer.innerHTML = `
+                    <div class="relative w-full h-full">
+                        <img src="https://img.youtube.com/vi/${vId}/maxresdefault.jpg" class="w-full h-full object-cover">
+                        <a href="${ytUrl}" target="_blank" class="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/20 transition-all group">
+                            <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
+                                <i class="ri-play-fill text-white text-3xl"></i>
+                            </div>
+                        </a>
+                    </div>`;
+            } else {
+                ytContainer.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full text-gray-600">
+                        <i class="ri-video-off-line text-3xl mb-2"></i>
+                        <p class="text-xs">Không có video hướng dẫn</p>
+                    </div>`;
+            }
+
+            setupStars();
+            loadReviews();
+        });
+    </script>
     <footer class="bg-[#07070c] border-t border-white/5 pt-14 pb-8">
     <div class="px-6 lg:px-12 max-w-screen-xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
@@ -350,7 +272,7 @@
                     <a href="https://discord.gg/dbVjXAazCU" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-indigo-500/20 text-gray-400 hover:text-indigo-400 transition-all border border-white/5">
                         <i class="ri-discord-line text-lg"></i>
                     </a>
-                    <a href="#" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-sky-500/20 text-gray-400 hover:text-sky-400 transition-all border border-white/5">
+                    <a href="https://x.com/TaGamer12605" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-sky-500/20 text-gray-400 hover:text-sky-400 transition-all border border-white/5">
                         <i class="ri-twitter-x-line text-lg"></i>
                     </a>
                 </div>
@@ -388,179 +310,5 @@
         </div>
     </div>
 </footer>
-    <script src="database.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const scriptId = urlParams.get('id');
-
-        // --- 1. LẤY DỮ LIỆU TỪ LOCALSTORAGE & DATABASE ---
-        const localScripts = JSON.parse(localStorage.getItem('myScripts')) || [];
-        let scriptData = localScripts.find(s => s.id == scriptId);
-
-        if (!scriptData && typeof scripts !== 'undefined') {
-            scriptData = scripts.find(s => s.id == scriptId);
-        }
-
-        // --- 2. KIỂM TRA VÀ HIỂN THỊ CHI TIẾT SCRIPT ---
-        if (!scriptData) {
-            document.body.innerHTML = `
-                <div class="h-screen flex items-center justify-center text-white flex-col gap-4 bg-[#0a0a0f]">
-                    <h1 class="text-6xl font-black text-cyan-500">404</h1>
-                    <p class="text-gray-400 uppercase tracking-widest text-xs">Không tìm thấy Script!</p>
-                    <a href="index.html" class="px-6 py-2 bg-white/5 border border-white/10 rounded-xl text-sm hover:bg-cyan-500 hover:text-black transition-all">Quay lại</a>
-                </div>`;
-            return;
-        }
-
-        // Đổ dữ liệu vào giao diện
-        document.getElementById('page-title').innerText = `${scriptData.name || scriptData.title} | TAScripts`;
-        document.getElementById('breadcrumb-game').innerText = scriptData.category || scriptData.game;
-        document.getElementById('script-badge').innerText = scriptData.badge || 'New';
-        document.getElementById('script-title').innerText = scriptData.name || scriptData.title;
-        document.getElementById('script-author').innerText = scriptData.author || 'TA Gamer';
-        document.getElementById('script-views').innerText = (scriptData.downloads || scriptData.views || 0).toLocaleString();
-        document.getElementById('script-banner').src = scriptData.thumbnail || 'image/background.jpg';
-        document.getElementById('get-script-btn').href = scriptData.link;
-        document.getElementById('stat-game').innerText = scriptData.category || scriptData.game;
-        document.getElementById('stat-author').innerText = scriptData.author || 'TA Gamer';
-        document.getElementById('script-rating').innerText = scriptData.rating || '5.0';
-
-        // Render tính năng
-        const featuresToShow = scriptData.tags || scriptData.features || ["Auto Farm", "Anti-Ban"];
-        document.getElementById('script-features').innerHTML = featuresToShow.map(f => `
-            <div class="flex items-start gap-2 p-3 rounded-xl bg-white/5 border border-white/5">
-                <i class="ri-checkbox-circle-fill text-cyan-500 mt-0.5"></i>
-                <span class="text-gray-300">${f}</span>
-            </div>
-        `).join('');
-
-        // Video YouTube (giữ nguyên logic của bạn)
-        const ytContainer = document.getElementById('youtube-preview');
-        if (scriptData.youtube && scriptData.youtube !== "#") {
-            let videoId = "";
-            if (scriptData.youtube.includes('v=')) videoId = scriptData.youtube.split('v=')[1].split('&')[0];
-            else if (scriptData.youtube.includes('youtu.be/')) videoId = scriptData.youtube.split('youtu.be/')[1];
-            
-            if (videoId) {
-                ytContainer.innerHTML = `
-                    <a href="${scriptData.youtube}" target="_blank" class="block h-full w-full">
-                        <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" class="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-all">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white shadow-xl group-hover:scale-110 transition-all">
-                                <i class="ri-play-mini-fill text-2xl ml-1"></i>
-                            </div>
-                        </div>
-                    </a>`;
-            }
-        }
-
-        // --- 3. QUAN TRỌNG: GỌI LOAD REVIEW TẠI ĐÂY ---
-        loadReviews(scriptId);
-    });
-
-    // --- LOGIC ĐÁNH GIÁ (Để bên ngoài DOMContentLoaded để các nút onclick gọi được) ---
-    // --- BIẾN TOÀN CỤC ---
-let selectedStars = 0;
-// Lấy tên từ LocalStorage (giả sử key lưu user là 'currentUser' hoặc 'user')
-const currentUser = JSON.parse(localStorage.getItem('currentUser')) || { username: "Khách" };
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Hiển thị tên người dùng lên giao diện gửi
-    const nameDisplay = document.getElementById('display-username');
-    if(nameDisplay) nameDisplay.innerText = currentUser.username;
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const scriptId = urlParams.get('id');
-
-    // ... (Giữ nguyên phần load scriptData của bạn) ...
-
-    // GỌI HÀM LOAD REVIEW KHI TRANG MỞ
-    if (scriptId) {
-        loadReviews(scriptId);
-        setupStars();
-    }
-});
-
-// Hàm thiết lập chọn sao
-function setupStars() {
-    const stars = document.querySelectorAll('#star-rating i');
-    stars.forEach(star => {
-        star.onclick = function() {
-            selectedStars = this.dataset.value;
-            stars.forEach(s => {
-                if (s.dataset.value <= selectedStars) {
-                    s.classList.replace('ri-star-line', 'ri-star-fill');
-                    s.classList.add('text-yellow-500');
-                } else {
-                    s.classList.replace('ri-star-fill', 'ri-star-line');
-                    s.classList.remove('text-yellow-500');
-                }
-            });
-        };
-    });
-}
-
-function submitReview() {
-    const content = document.getElementById('review-content').value.trim();
-    if (selectedStars === 0) return alert("Vui lòng chọn số sao!");
-    if (!content) return alert("Vui lòng viết cảm nhận!");
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const scriptId = urlParams.get('id');
-
-    const newReview = {
-        id: Date.now(),
-        name: currentUser.username, // LẤY TỪ BIẾN CURRENTUSER ĐÃ KHAI BÁO
-        stars: selectedStars,
-        content: content,
-        time: new Date().toLocaleDateString('vi-VN')
-    };
-
-    let allReviews = JSON.parse(localStorage.getItem(`reviews_${scriptId}`)) || [];
-    allReviews.unshift(newReview);
-    localStorage.setItem(`reviews_${scriptId}`, JSON.stringify(allReviews));
-
-    document.getElementById('review-content').value = "";
-    alert("Cảm ơn " + currentUser.username + " đã đánh giá!");
-    loadReviews(scriptId);
-}
-
-function loadReviews(scriptId) {
-    const reviewsList = document.getElementById('reviews-list');
-    if(!reviewsList) return; // Bảo vệ nếu không tìm thấy ID
-
-    const allReviews = JSON.parse(localStorage.getItem(`reviews_${scriptId}`)) || [];
-
-    if (allReviews.length === 0) {
-        reviewsList.innerHTML = `<p class="text-gray-500 italic text-sm text-center py-10">Chưa có đánh giá nào cho Script này.</p>`;
-        return;
-    }
-
-    reviewsList.innerHTML = allReviews.map(r => `
-        <div class="flex gap-4 p-5 rounded-2xl bg-white/[0.03] border border-white/5 animate-fade-in">
-            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center text-cyan-400 font-black text-lg border border-cyan-500/10 uppercase">
-                ${r.name ? r.name.charAt(0) : 'G'}
-            </div>
-            <div class="flex-1">
-                <div class="flex items-center justify-between mb-2">
-                    <div>
-                        <h4 class="text-white font-bold text-sm tracking-wide">${r.name}</h4>
-                        <div class="flex gap-0.5 text-yellow-500 text-[10px] mt-1">
-                            ${'<i class="ri-star-fill"></i>'.repeat(r.stars)}
-                        </div>
-                    </div>
-                    <span class="text-[10px] text-gray-600 font-medium">${r.time}</span>
-                </div>
-                <p class="text-gray-400 text-sm leading-relaxed">${r.content}</p>
-            </div>
-        </div>
-    `).join('');
-}
-    
-    // Gọi hàm setup sao ngay khi load
-    setTimeout(setupStars, 100); 
-</script>
-<script src="js/auth.js"></script>
 </body>
 </html>

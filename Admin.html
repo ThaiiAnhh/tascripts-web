@@ -379,89 +379,94 @@
     </main>
 
     <script>
-// --- 1. HÀM LẤY DỮ LIỆU CHUẨN ---
-function getExecutors() {
-    return JSON.parse(localStorage.getItem('admin_executors')) || [];
-}
+// --- 1. CẤU HÌNH DỮ LIỆU ---
+const getData = (key) => {
+    try {
+        return JSON.parse(localStorage.getItem(key)) || [];
+    } catch (e) {
+        return [];
+    }
+};
+const saveData = (key, data) => localStorage.setItem(key, JSON.stringify(data));
 
-// --- 2. HÀM LƯU DỮ LIỆU CHUẨN ---
-function saveExecutors(data) {
-    localStorage.setItem('admin_executors', JSON.stringify(data));
-}
-
-// --- 3. HÀM VẼ DANH SÁCH (RENDER) ---
-function renderAdminExecutors() {
-    const wrapper = document.getElementById('admin-executor-wrapper');
-    if (!wrapper) return;
-
-    const currentData = getExecutors();
+// --- 2. HÀM VẼ GIAO DIỆN (RENDER) ---
+// --- HÀM RENDER TỔNG HỢP (FIX LỖI UNDEFINED) ---
+function renderAdminContent() {
+    // 1. Render Scripts
+    const scriptWrapper = document.getElementById('admin-script-wrapper');
+    const scripts = JSON.parse(localStorage.getItem('admin_scripts')) || [];
     
-    // Cập nhật Dashboard
-    const countTop = document.getElementById('admin-total-executors');
-    const countSub = document.getElementById('total-executor-count');
-    if (countTop) countTop.innerText = currentData.length;
-    if (countSub) countSub.innerText = currentData.length + " Executor";
+    // Cập nhật Dashboard số lượng
+    if(document.getElementById('admin-total-scripts')) 
+        document.getElementById('admin-total-scripts').innerText = scripts.length;
 
-    if (currentData.length === 0) {
-        wrapper.innerHTML = `<div class="p-10 text-center text-gray-500 italic text-xs uppercase">Danh sách trống.</div>`;
-        return;
+    if (scriptWrapper) {
+        scriptWrapper.innerHTML = scripts.length === 0 
+            ? `<div class="p-10 text-center text-gray-500 italic text-xs uppercase">Chưa có script nào.</div>`
+            : scripts.map((s, i) => {
+                // KIỂM TRA ẢNH: Nếu s.thumb bị trống hoặc là chuỗi "undefined"
+                const validThumb = (s.thumb && s.thumb !== "undefined") ? s.thumb : "image/logo.png";
+                
+                return `
+                <div class="flex items-center justify-between bg-white/5 border border-white/10 p-4 rounded-2xl mb-3">
+                    <div class="flex items-center gap-4">
+                        <img src="${validThumb}" class="w-12 h-12 rounded-xl object-cover border border-white/10" 
+                             onerror="this.src='image/logo.png'">
+                        <div>
+                            <h4 class="text-white font-bold text-sm">${s.title || 'No Title'}</h4> 
+                            <span class="text-[9px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-400 font-black uppercase">${s.game || 'Unknown'}</span>
+                        </div>
+                    </div>
+                    <button onclick="deleteItem('admin_scripts', ${i})" class="w-10 h-10 flex items-center justify-center text-red-500 hover:bg-red-500/10 rounded-xl transition-all">
+                        <i class="ri-delete-bin-line text-lg"></i>
+                    </button>
+                </div>`;
+            }).join('');
     }
 
-    wrapper.innerHTML = currentData.map((exec, index) => `
-        <div class="flex items-center justify-between bg-white/5 border border-white/10 p-4 rounded-2xl mb-3">
-            <div class="flex items-center gap-4">
-                <img src="${exec.image}" class="w-12 h-12 rounded-xl object-cover border border-white/10" onerror="this.src='image/logo.png'">
-                <div>
-                    <h4 class="text-white font-bold text-sm">${exec.name}</h4> 
-                    <span class="text-[9px] px-2 py-0.5 rounded bg-teal-500/20 text-teal-400 font-black uppercase">${exec.platform}</span>
-                </div>
-            </div>
-            <button onclick="deleteExecutor(${index})" class="w-10 h-10 flex items-center justify-center text-red-500 hover:bg-red-500/10 rounded-xl transition-all">
-                <i class="ri-delete-bin-line text-lg"></i>
-            </button>
-        </div>
-    `).join('');
+    // 2. Render Executors
+    const execWrapper = document.getElementById('admin-executor-wrapper');
+    const execs = JSON.parse(localStorage.getItem('admin_executors')) || [];
+    
+    if(document.getElementById('admin-total-executors')) 
+        document.getElementById('admin-total-executors').innerText = execs.length;
+
+    if (execWrapper) {
+        execWrapper.innerHTML = execs.length === 0 
+            ? `<div class="p-10 text-center text-gray-500 italic text-xs uppercase">Chưa có executor nào.</div>`
+            : execs.map((e, i) => {
+                // KIỂM TRA ẢNH: Nếu e.image bị trống hoặc là chuỗi "undefined"
+                const validImg = (e.image && e.image !== "undefined") ? e.image : "image/logo.png";
+
+                return `
+                <div class="flex items-center justify-between bg-white/5 border border-white/10 p-4 rounded-2xl mb-3">
+                    <div class="flex items-center gap-4">
+                        <img src="${validImg}" class="w-12 h-12 rounded-xl object-cover border border-white/10" 
+                             onerror="this.src='image/logo.png'">
+                        <div>
+                            <h4 class="text-white font-bold text-sm">${e.name || 'No Name'}</h4> 
+                            <span class="text-[9px] px-2 py-0.5 rounded bg-teal-500/20 text-teal-400 font-black uppercase">${e.platform || 'PC/Mobile'}</span>
+                        </div>
+                    </div>
+                    <button onclick="deleteItem('admin_executors', ${i})" class="w-10 h-10 flex items-center justify-center text-red-500 hover:bg-red-500/10 rounded-xl transition-all">
+                        <i class="ri-delete-bin-line text-lg"></i>
+                    </button>
+                </div>`;
+            }).join('');
+    }
 }
 
-// --- 4. HÀM XÓA (XÓA TRIỆT ĐỂ) ---
-function deleteExecutor(index) {
-    if (confirm("M có chắc muốn xóa không Thái Anh?")) {
-        let data = getExecutors();
-        data.splice(index, 1); // Xóa khỏi mảng
-        saveExecutors(data);   // Lưu đè lại localStorage
-        renderAdminExecutors(); // Vẽ lại giao diện ngay
+// --- 3. HÀM XÓA ---
+function deleteItem(key, index) {
+    if (confirm("Xóa mục này nhé Thái Anh?")) {
+        let data = getData(key);
+        data.splice(index, 1);
+        saveData(key, data);
+        renderAdminContent();
     }
 }
 
-// --- 5. HÀM SETUP UI HEADER (FIX LỖI NOT DEFINED) ---
-function setupHeaderUI() {
-    const notiTrigger = document.getElementById('notification-trigger');
-    const notiDropdown = document.getElementById('notification-dropdown');
-    const searchTrigger = document.getElementById('search-trigger');
-    const searchInput = document.getElementById('search-input');
-
-    if (searchTrigger && searchInput) {
-        searchTrigger.onclick = (e) => {
-            e.stopPropagation();
-            searchInput.classList.toggle('w-0');
-            searchInput.classList.toggle('w-[200px]');
-            searchInput.classList.toggle('opacity-0');
-            searchInput.classList.toggle('px-3');
-            if(!searchInput.classList.contains('w-0')) searchInput.focus();
-        };
-    }
-    if (notiTrigger && notiDropdown) {
-        notiTrigger.onclick = (e) => {
-            e.stopPropagation();
-            notiDropdown.classList.toggle('hidden');
-        };
-    }
-    document.addEventListener('click', () => {
-        if(notiDropdown) notiDropdown.classList.add('hidden');
-    });
-}
-
-// --- 6. HÀM CHUYỂN TAB ---
+// --- 4. CHUYỂN TAB ---
 function switchTab(element, tabId) {
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.remove('bg-gradient-to-r', 'from-cyan-500/20', 'to-teal-500/20', 'text-cyan-400', 'border', 'border-cyan-500/30');
@@ -472,57 +477,55 @@ function switchTab(element, tabId) {
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
     const target = document.getElementById('content-' + tabId);
     if (target) target.classList.remove('hidden');
-
-    renderAdminExecutors(); // Luôn render lại khi đổi tab để cập nhật data mới nhất
+    
+    renderAdminContent();
 }
 
-// --- 7. KHỞI CHẠY (BẢN FIX TRIỆT ĐỂ) ---
+// --- 5. KHỞI CHẠY ---
 document.addEventListener('DOMContentLoaded', () => {
-    setupHeaderUI();
-    renderAdminExecutors();
+    // Kiểm tra hàm tồn tại trước khi gọi để tránh lỗi dừng script
+    if (typeof setupHeaderUI === 'function') setupHeaderUI();
+    if (typeof renderAdminList === 'function') renderAdminList();
 
-    const btnSubmit = document.getElementById('btn-submit-exec');
-    if (btnSubmit) {
-        btnSubmit.onclick = function(e) {
+    const scriptForm = document.getElementById('add-script-form');
+    if (scriptForm) {
+        scriptForm.onsubmit = function(e) {
             e.preventDefault();
             
-            const nameInput = document.getElementById('exec-name');
-            const nameValue = nameInput.value.trim();
+            const title = document.getElementById('script-title').value.trim();
+            const thumb = document.getElementById('script-thumb-url').value.trim();
+
+            if (!title) return alert("Nhập tiêu đề đã Thái Anh ơi!");
+
+            let scripts = JSON.parse(localStorage.getItem('admin_scripts')) || [];
             
-            if (!nameValue) return alert("Nhập tên đã m ơi!");
-
-            // 1. ÉP TRÌNH DUYỆT ĐỌC LẠI LOCALSTORAGE NGAY TẠI ĐÂY
-            // Không dùng biến trung gian nào ở ngoài hết, cứ gọi thẳng Storage ra
-            let freshData = JSON.parse(localStorage.getItem('admin_executors')) || [];
-
-            // 2. Tạo đối tượng mới
-            const newObj = {
-                name: nameValue,
-                platform: document.getElementById('exec-platform').value,
-                image: document.getElementById('exec-thumb-url').value || "image/logo.png",
-                id: Date.now() // Dùng timestamp làm ID để không bao giờ trùng
+            const newScript = {
+                id: Date.now(),
+                title: title,
+                name: title, // Lưu cả 2 để database.js gọi kiểu gì cũng trúng
+                game: document.getElementById('script-game').value,
+                thumb: thumb || "image/logo.png",
+                image: thumb || "image/logo.png", // Lưu dự phòng để tránh lỗi 404
+                link: document.getElementById('script-link').value,
+                badge: document.getElementById('script-badge').value,
+                desc: document.getElementById('script-desc').value
             };
 
-            // 3. Thêm vào đầu mảng dữ liệu vừa lấy "tươi" xong
-            freshData.unshift(newObj);
-
-            // 4. LƯU ĐÈ NGAY LẬP TỨC
-            localStorage.setItem('admin_executors', JSON.stringify(freshData));
-
-            // 5. Reset form và thông báo
-            document.getElementById('form-executor').reset();
-            alert("Đã đăng xong: " + nameValue);
+            scripts.unshift(newScript);
+            localStorage.setItem('admin_scripts', JSON.stringify(scripts));
             
-            // 6. CẬP NHẬT GIAO DIỆN VÀ CHUYỂN TAB
-            renderAdminExecutors(); // Vẽ lại danh sách để nó nhận data mới nhất
+            scriptForm.reset();
+            alert("Đã thêm Script thành công!");
             
-            const listBtn = document.querySelector('[onclick*="list"]');
-            if (listBtn) {
-                switchTab(listBtn, 'list');
+            if (typeof renderAdminList === 'function') renderAdminList();
+            // Chuyển về tab danh sách (đảm bảo hàm switchTab có tồn tại)
+            if (typeof switchTab === 'function') {
+                switchTab(document.querySelector('[onclick*="list"]'), 'list');
             }
         };
     }
 });
+
 </script>
 <footer class="bg-[#07070c] border-t border-white/5 pt-14 pb-8">
     <div class="px-6 lg:px-12 max-w-screen-xl mx-auto">

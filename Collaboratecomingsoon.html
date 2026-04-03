@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Collaborate - Cộng tác cùng TAScripts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --dark-bg: #0a0a0f;
+            --cyan-glow: rgba(6, 182, 212, 0.2);
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--dark-bg);
+            color: #9ca3af;
+        }
+
+        /* Custom Scrollbar cho phần dán Script */
+        .code-scrollbar::-webkit-scrollbar { width: 6px; }
+        .code-scrollbar::-webkit-scrollbar-track { background: #07070c; }
+        .code-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        .code-scrollbar::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+
+        /* Hiệu ứng mờ cho Input */
+        .input-glass {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .input-glass:focus {
+            border-color: rgba(6, 182, 212, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 15px var(--cyan-glow);
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <body class="bg-[#0a0a0f] overflow-x-hidden font-sans">
+
+    <div id="top-announcement" class="relative px-4 py-2.5 flex items-center justify-center gap-4 flex-wrap bg-slate-900/80 border-b border-white/5 z-[60] backdrop-blur-sm">
+        <div class="flex items-center gap-2 text-sm text-gray-300">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse flex-shrink-0"></span>
+            <span class="hidden sm:inline font-medium">Tham gia cộng đồng để nhận script mới nhất mỗi ngày!</span>
+            <span class="sm:hidden font-medium text-xs">Script mới mỗi ngày!</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <a href="https://discord.gg/dbVjXAazCU" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#5865F2]/20 hover:bg-[#5865F2]/40 border border-[#5865F2]/40 text-[#7b8dff] hover:text-white transition-all text-xs font-bold">
+                <i class="ri-discord-line text-sm"></i>
+                <span>Discord</span>
+                <span class="hidden sm:inline text-[#5865F2]/70 font-normal">• 12.4K</span>
+            </a>
+            <a href="https://www.youtube.com/@tagamerr" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600/20 hover:bg-red-600/40 border border-red-500/40 text-red-400 hover:text-white transition-all text-xs font-bold">
+                <i class="ri-youtube-line text-sm"></i>
+                <span>YouTube</span>
+                <span class="hidden sm:inline text-red-500/70 font-normal">• 85K</span>
+            </a>
+        </div>
+        <button onclick="document.getElementById('top-announcement').remove()" class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/10 text-gray-500 hover:text-white transition-all">
+            <i class="ri-close-line text-sm"></i>
+        </button>
+    </div>
+
+    <nav class="px-6 lg:px-12 h-16 flex items-center justify-between bg-slate-900/50 backdrop-blur-md border-b border-white/5 sticky top-0 z-50">
+        <div class="flex items-center w-1/4">
+            <a class="flex items-center gap-2.5 cursor-pointer" href="/index.html">
+                <div class="w-10 h-10 rounded-xl overflow-hidden ring-2 ring-cyan-500/30">
+                    <img alt="Logo" class="w-full h-full object-cover" src="/image/logo.png">
+                </div>
+                <span class="text-white font-black text-lg tracking-tight uppercase">TA Scripts</span>
+            </a>
+        </div>
+
+        <div class="hidden md:flex flex-1 justify-center items-center gap-7">
+            <a class="text-gray-300 hover:text-cyan-400 transition-colors text-sm font-medium" href="/index.html">Home</a>
+            <a class="text-gray-300 hover:text-cyan-400 transition-colors text-sm font-medium" href="/Executors.html">Executors</a>
+            <a class="text-gray-300 hover:text-cyan-400 transition-colors text-sm font-medium flex items-center gap-1" href="/Collaborate.html">
+                <i class="ri-send-plane-line text-xs"></i> Collaborate
+            </a>
+            <a id="admin-nav-btn" class="hidden text-yellow-400 hover:text-yellow-300 transition-colors text-sm font-medium" href="Admin.html">
+    <i class="ri-shield-star-line mr-1"></i> Admin
+</a>
+        </div>
+
+        <div class="flex items-center gap-3 justify-end w-1/4">
+            <div id="search-wrapper" class="flex items-center bg-white/5 border border-white/10 rounded-lg transition-all duration-300 ease-in-out group focus-within:border-cyan-500/50">
+                <input id="search-input" type="text" placeholder="Tìm script..." class="w-0 opacity-0 pointer-events-none bg-transparent text-white text-sm py-1.5 px-0 focus:outline-none transition-all duration-300 ease-in-out">
+                <button id="search-trigger" class="w-9 h-9 flex items-center justify-center text-gray-400 hover:text-cyan-400 transition-all cursor-pointer flex-shrink-0">
+                    <i id="search-icon" class="ri-search-line text-base"></i>
+                </button>
+            </div>
+
+            <div class="relative">
+                <button id="notification-trigger" class="relative w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-cyan-400 transition-all border border-white/10">
+                    <i class="ri-notification-3-line text-base"></i>
+                    <span class="absolute -top-1 -right-1 w-4 h-4 flex items-center justify-center bg-red-500 text-white text-[9px] font-black rounded-full ring-2 ring-[#07070c]">6</span>
+                </button>
+
+                <div id="notification-dropdown" class="hidden absolute top-full right-0 mt-3 w-[320px] bg-[#111118] border border-white/10 rounded-xl overflow-hidden z-50 shadow-2xl">
+                    <div class="flex items-center justify-between px-4 py-3 border-b border-white/8">
+                        <div class="flex items-center gap-2">
+                            <i class="ri-notification-3-line text-cyan-400 text-sm"></i>
+                            <span class="text-white font-bold text-sm">Thông Báo</span>
+                        </div>
+                        <button class="text-xs text-cyan-400 hover:text-cyan-300 transition-colors">Xem tất cả</button>
+                    </div>
+                    <div class="max-h-[360px] overflow-y-auto custom-scrollbar">
+                        <button class="w-full flex items-start gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left border-b border-white/5 bg-cyan-500/[0.03]">
+                            <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 border text-cyan-400 bg-cyan-500/15 border-cyan-500/20">
+                                <i class="ri-notification-3-line text-sm"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-xs font-bold leading-tight truncate text-white">Chào mừng đến TA Scripts!</p>
+                                <p class="text-gray-500 text-xs mt-0.5 line-clamp-2 leading-relaxed">Tham gia Discord để nhận hỗ trợ kỹ thuật ngay.</p>
+                                <p class="text-gray-600 text-[10px] mt-1">2026-03-28</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="auth-section" class="flex items-center">
+    <a id="login-btn" href="/login.html" class="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 transition-all text-sm font-bold whitespace-nowrap">
+        <i class="ri-login-box-line"></i> <span class="hidden sm:inline">Đăng Nhập</span>
+    </a>
+
+    <div id="user-info" class="hidden items-center gap-2 bg-white/5 border border-white/10 py-1 pl-1 pr-3 rounded-full hover:bg-white/10 transition-all cursor-pointer ring-1 ring-transparent hover:ring-cyan-500/30 ml-2" onclick="location.href='/profile.html'">
+        <div class="w-8 h-8 rounded-full overflow-hidden ring-2 ring-cyan-500/30 flex-shrink-0">
+            <img id="nav-user-avatar" src="/image/default-avatar.png" alt="Avatar" class="w-full h-full object-cover">
+        </div>
+        
+        <span id="nav-user-name" class="text-white text-[11px] font-black uppercase tracking-tight block whitespace-nowrap overflow-hidden text-ellipsis max-w-[70px] md:max-w-[100px]">
+    TênNgườiDùngCựcKỳDàiCủaBạnỞĐây
+</span>
+    </div>
+</div>
+    </nav>
+
+    <script>
+        // Notification Logic
+        const notiTrigger = document.getElementById('notification-trigger');
+        const notiDropdown = document.getElementById('notification-dropdown');
+
+        notiTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            notiDropdown.classList.toggle('hidden');
+            if(typeof closeSearch === 'function') closeSearch(); 
+        });
+
+        // Search Logic
+        const searchTrigger = document.getElementById('search-trigger');
+        const searchInput = document.getElementById('search-input');
+        const searchWrapper = document.getElementById('search-wrapper');
+        const searchIcon = document.getElementById('search-icon');
+
+        function closeSearch() {
+            searchInput.classList.add('w-0', 'opacity-0', 'pointer-events-none', 'px-0');
+            searchInput.classList.remove('w-[200px]', 'opacity-100', 'px-3');
+            searchIcon.classList.replace('ri-close-line', 'ri-search-line');
+            searchWrapper.classList.remove('bg-[#0a0a0f]/90', 'border-cyan-500/50');
+            searchInput.value = "";
+        }
+
+        searchTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isClosed = searchInput.classList.contains('w-0');
+            if (isClosed) {
+                searchInput.classList.remove('w-0', 'opacity-0', 'pointer-events-none', 'px-0');
+                searchInput.classList.add('w-[200px]', 'opacity-100', 'px-3');
+                searchIcon.classList.replace('ri-search-line', 'ri-close-line');
+                searchWrapper.classList.add('bg-[#0a0a0f]/90', 'border-cyan-500/50');
+                searchInput.focus();
+                notiDropdown.classList.add('hidden');
+            } else {
+                if (searchInput.value.trim() !== "") {
+                    console.log("Searching for:", searchInput.value);
+                } else {
+                    closeSearch();
+                }
+            }
+        });
+
+        // Global Click Close
+        document.addEventListener('click', (e) => {
+            if (!notiDropdown.contains(e.target) && e.target !== notiTrigger) {
+                notiDropdown.classList.add('hidden');
+            }
+            if (!searchWrapper.contains(e.target)) {
+                closeSearch();
+            }
+        });
+    </script>
+</body>
+
+    <main class="max-w-4xl mx-auto px-4 py-16 relative">
+        <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="text-center mb-12 relative z-10">
+            <h1 class="text-4xl md:text-5xl font-black text-white uppercase tracking-tight mb-4">Collaborate</h1>
+            <p class="text-gray-400 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+                Nơi bạn có thể gửi yêu cầu giới thiệu Script của mình. Chúng tôi luôn tìm kiếm những kịch bản chất lượng để chia sẻ với cộng đồng.
+            </p>
+        </div>
+
+        <div class="bg-slate-900/40 border border-white/5 rounded-[2rem] p-6 md:p-10 backdrop-blur-xl shadow-2xl relative z-10">
+            <form id="collab-form" class="space-y-8">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-2 text-[10px] font-black text-cyan-500 uppercase tracking-[0.2em] ml-1">
+                            <i class="ri-bookmark-fill text-xs"></i> Name Script
+                        </label>
+                        <input type="text" required placeholder="Nhập tên script của bạn..." 
+                            class="w-full input-glass rounded-xl px-4 py-3.5 text-white focus:outline-none transition-all placeholder:text-gray-600">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-2 text-[10px] font-black text-cyan-500 uppercase tracking-[0.2em] ml-1">
+                            <i class="ri-discord-fill text-xs"></i> Discord Contact
+                        </label>
+                        <input type="text" required placeholder="Username#0000" 
+                            class="w-full input-glass rounded-xl px-4 py-3.5 text-white focus:outline-none transition-all placeholder:text-gray-600">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-2 text-[10px] font-black text-cyan-500 uppercase tracking-[0.2em] ml-1">
+                            <i class="ri-terminal-box-line text-xs"></i> Exploit Support
+                        </label>
+                        <input type="text" required placeholder="Fluxus, Delta, Wave, v.v." 
+                            class="w-full input-glass rounded-xl px-4 py-3.5 text-white focus:outline-none transition-all placeholder:text-gray-600">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-2 text-[10px] font-black text-cyan-500 uppercase tracking-[0.2em] ml-1">
+                            <i class="ri-gamepad-line text-xs"></i> Link Game
+                        </label>
+                        <input type="url" required placeholder="Link game trên Roblox..." 
+                            class="w-full input-glass rounded-xl px-4 py-3.5 text-white focus:outline-none transition-all placeholder:text-gray-600">
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="flex items-center gap-2 text-[10px] font-black text-cyan-500 uppercase tracking-[0.2em] ml-1">
+                        <i class="ri-image-2-fill text-xs"></i> Thumbnail
+                    </label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="url" id="thumb-link" placeholder="Dán link ảnh từ bên ngoài..." 
+                            class="w-full input-glass rounded-xl px-4 py-3.5 text-white focus:outline-none transition-all">
+                        
+                        <div class="relative group">
+                            <input type="file" id="thumb-file" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
+                            <div class="w-full bg-cyan-500/5 border-2 border-dashed border-cyan-500/20 rounded-xl px-4 py-3 text-center group-hover:border-cyan-500/50 transition-all">
+                                <span class="text-xs text-cyan-400 font-bold uppercase tracking-wider" id="file-name">
+                                    <i class="ri-upload-2-fill mr-1"></i> Tải ảnh từ máy
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="preview-container" class="hidden mt-4 relative w-full aspect-video rounded-2xl overflow-hidden border border-white/10 bg-black/40">
+                        <img id="image-preview" src="#" alt="Preview" class="w-full h-full object-cover">
+                        <button type="button" id="remove-preview" class="absolute top-3 right-3 bg-red-500/80 hover:bg-red-500 text-white p-2 rounded-xl backdrop-blur-md transition-all">
+                            <i class="ri-delete-bin-6-line"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="flex items-center gap-2 text-[10px] font-black text-cyan-500 uppercase tracking-[0.2em] ml-1">
+                        <i class="ri-code-s-slash-fill text-xs"></i> Script Source 
+                    </label>
+                    <textarea rows="8" required placeholder="Dán đoạn code hoặc loadstring của bạn vào đây..." 
+                        class="w-full bg-[#050508] border border-white/5 rounded-2xl px-5 py-4 text-cyan-400 font-mono text-sm focus:outline-none focus:border-cyan-500/40 transition-all resize-none code-scrollbar"></textarea>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full group relative overflow-hidden bg-cyan-600 px-8 py-5 rounded-2xl transition-all hover:bg-cyan-500 hover:shadow-[0_0_30px_rgba(6,182,212,0.3)] active:scale-[0.98]">
+                        <div class="relative z-10 flex items-center justify-center gap-3">
+                            <span class="text-white font-black uppercase tracking-widest text-sm">Gửi yêu cầu phê duyệt</span>
+                            <i class="ri-rocket-2-fill text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                    </button>
+                    <p class="text-center mt-6 text-[10px] text-gray-600 uppercase tracking-[0.3em] font-bold">
+                        Hệ thống tự động bảo mật dữ liệu của bạn
+                    </p>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="bg-[#07070c] border-t border-white/5 pt-14 pb-8">
+    <div class="px-6 lg:px-12 max-w-screen-xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+            
+            <div>
+                <a class="flex items-center gap-2 mb-4 cursor-pointer" href="/">
+                    <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-purple-600">
+                        <img alt="Logo" class="w-full h-full object-cover" src="/image/logo.png">
+                    </div>
+                    <div>
+                        <span class="text-white font-black text-lg">TA Scripts</span>
+                    </div>
+                </a>
+                <p class="text-gray-500 text-sm leading-relaxed mb-5">
+                    Nền tảng chia sẻ script Roblox chuyên nghiệp. Script chất lượng cao, an toàn và được cập nhật liên tục bởi đội ngũ TA Scripts.
+                </p>
+                <div class="flex items-center gap-3">
+                    <a href="https://www.youtube.com/@tagamerr" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-red-500/20 text-gray-400 hover:text-red-400 transition-all border border-white/5">
+                        <i class="ri-youtube-line text-lg"></i>
+                    </a>
+                    <a href="https://discord.gg/dbVjXAazCU" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-indigo-500/20 text-gray-400 hover:text-indigo-400 transition-all border border-white/5">
+                        <i class="ri-discord-line text-lg"></i>
+                    </a>
+                    <a href="#" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-sky-500/20 text-gray-400 hover:text-sky-400 transition-all border border-white/5">
+                        <i class="ri-twitter-x-line text-lg"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold text-sm mb-5 uppercase tracking-widest">Danh mục</h4>
+                <ul class="space-y-3">
+                    <li><a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer" href="#">Script Mới Nhất</a></li>
+                    <li><a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer" href="#">Script Phổ Biến</a></li>
+                    <li><a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer" href="#">Script Hot</a></li>
+                    <li><a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer" href="#">Yêu Cầu Script</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold text-sm mb-5 uppercase tracking-widest">Nhận Script Mới</h4>
+                <p class="text-gray-500 text-sm mb-4">Đăng ký để nhận thông báo ngay khi có script Blox Fruits, Arsenal... mới nhất.</p>
+                <div class="flex flex-col gap-2">
+                    <input type="email" placeholder="Email của bạn..." class="bg-white/5 border border-white/10 text-white text-sm px-3 py-2.5 rounded-lg focus:outline-none focus:border-cyan-500/50 placeholder-gray-600 w-full transition-all">
+                    <button class="w-full py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-400 hover:to-cyan-500 text-white text-sm font-bold transition-all cursor-pointer shadow-lg shadow-cyan-500/10">
+                        Đăng Ký Ngay
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p class="text-gray-600 text-xs">© 2026 TA Scripts - All rights reserved. Chỉ dành cho mục đích giải trí.</p>
+            <div class="flex items-center gap-5">
+                <a href="#" class="text-gray-600 hover:text-gray-400 text-xs transition-colors">Điều Khoản</a>
+                <a href="#" class="text-gray-600 hover:text-gray-400 text-xs transition-colors">Bảo Mật</a>
+                <a href="#" class="text-gray-600 hover:text-gray-400 text-xs transition-colors">DMCA</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        const thumbFile = document.getElementById('thumb-file');
+        const thumbLink = document.getElementById('thumb-link');
+        const previewContainer = document.getElementById('preview-container');
+        const imagePreview = document.getElementById('image-preview');
+        const fileNameDisplay = document.getElementById('file-name');
+        const removeBtn = document.getElementById('remove-preview');
+
+        // Xử lý Tải File lên
+        thumbFile.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                fileNameDisplay.innerText = file.name;
+                thumbLink.value = ""; // Xóa link nếu chọn file
+                
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                    previewContainer.classList.add('animate-in', 'fade-in', 'duration-500');
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Xử lý Dán Link ảnh
+        thumbLink.addEventListener('input', function() {
+            if (this.value.trim() !== "") {
+                imagePreview.src = this.value;
+                previewContainer.classList.remove('hidden');
+                fileNameDisplay.innerHTML = '<i class="ri-upload-2-fill mr-1"></i> Tải ảnh từ máy';
+                thumbFile.value = ""; // Xóa file nếu dán link
+            } else {
+                previewContainer.classList.add('hidden');
+            }
+        });
+
+        // Nút xóa Preview
+        removeBtn.addEventListener('click', () => {
+            previewContainer.classList.add('hidden');
+            thumbFile.value = "";
+            thumbLink.value = "";
+            fileNameDisplay.innerHTML = '<i class="ri-upload-2-fill mr-1"></i> Tải ảnh từ máy';
+        });
+
+        // Xử lý Submit Form (Demo)
+        document.getElementById('collab-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Đã gửi yêu cầu thành công! Chúng tôi sẽ kiểm tra và phản hồi qua Discord sớm nhất.');
+            this.reset();
+            previewContainer.classList.add('hidden');
+        });
+    </script>
+    <script src="js/auth.js"></script>
+    <script src="js/database.js"></script>
+</body>
+</html>
