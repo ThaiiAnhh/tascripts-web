@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="image/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>TA SCRIPTS - Đăng Nhập</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;600;900&display=swap');
+        body { font-family: 'Geist', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#0a0a0f] text-white">
+
+    <div class="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-cyan-500/5 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-0 left-1/4 w-[400px] h-[300px] bg-teal-500/5 rounded-full blur-[100px]"></div>
+        </div>
+
+        <div class="relative w-full max-w-md">
+            <a class="flex items-center gap-2.5 justify-center mb-8 group" href="/">
+                <div class="w-11 h-11 rounded-xl overflow-hidden ring-2 ring-cyan-500/40 group-hover:ring-cyan-400 transition-all">
+                    <img alt="Logo" class="w-full h-full object-cover" src="https://storage.readdy-site.link/project_files/7554d802-e621-49c0-aa0f-575dec49db90/d30a3d20-96f6-4fda-9550-606bd4dad25f_001b5454b3ed3db364fc.jpg?v=dfa6054ef4c9fb5c310c795f7bee84d2">
+                </div>
+                <span class="text-white font-black text-2xl tracking-tight">TA SCRIPTS</span>
+            </a>
+
+            <div class="bg-[#111118] border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
+                <div class="flex items-center p-1.5 gap-1 border-b border-white/5 bg-white/2">
+                    <button class="flex-1 py-2.5 rounded-lg text-xs font-bold bg-gradient-to-r from-cyan-600/30 to-teal-600/20 text-cyan-400 border border-cyan-500/20 cursor-default">
+                        <i class="ri-login-box-line mr-1"></i>Đăng Nhập
+                    </button>
+                    <a href="register.html" class="flex-1 py-2.5 rounded-lg text-xs font-bold text-center text-gray-500 hover:text-gray-300 transition-all">
+                        <i class="ri-user-add-line mr-1"></i>Đăng Ký
+                    </a>
+                </div>
+
+                <div class="p-8">
+                    <h1 class="text-white font-black text-2xl mb-1">Chào mừng trở lại!</h1>
+                    <p class="text-gray-500 text-sm mb-8">Hãy đăng nhập để trải nghiệm các script roblox nhé!</p>
+
+                    <form class="space-y-5" id="loginForm">
+    <div>
+        <label class="text-gray-400 text-[10px] font-bold block mb-2 uppercase tracking-widest">Tên đăng nhập</label>
+        <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 focus-within:border-cyan-500/50 transition-all">
+            <i class="ri-user-line text-gray-500 text-sm"></i>
+            <input type="text" id="loginUsername" placeholder="Nhập tên đăng nhập..." required 
+                   class="flex-1 bg-transparent text-white text-sm focus:outline-none placeholder-gray-600">
+        </div>
+    </div>
+
+    <div>
+        <label class="text-gray-400 text-[10px] font-bold block mb-2 uppercase tracking-widest">Mật khẩu</label>
+        <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 focus-within:border-cyan-500/50 transition-all">
+            <i class="ri-lock-line text-gray-500 text-sm"></i>
+            <input type="password" id="loginPassword" placeholder="Nhập mật khẩu..." required 
+                   class="flex-1 bg-transparent text-white text-sm focus:outline-none placeholder-gray-600">
+        </div>
+    </div>
+
+    <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 text-white font-black text-sm transition-all shadow-lg shadow-cyan-500/20 active:scale-[0.98]">
+        <i class="ri-login-box-line mr-2"></i>ĐĂNG NHẬP NGAY
+    </button>
+</form>
+
+                    <div class="mt-6 text-center border-t border-white/5 pt-6">
+                        <a class="text-gray-500 hover:text-cyan-400 text-xs transition-colors inline-flex items-center gap-1" href="/index.html">
+                            <i class="ri-arrow-left-line"></i> Quay lại trang chủ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-[#07070c] border-t border-white/5 pt-14 pb-8">
+    <div class="px-6 lg:px-12 max-w-screen-xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+            
+            <div>
+                <a class="flex items-center gap-2 mb-4 cursor-pointer" href="/">
+                    <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-purple-600">
+                        <img alt="Logo" class="w-full h-full object-cover" src="/image/logo.png">
+                    </div>
+                    <div>
+                        <span class="text-white font-black text-lg">TASCRIPTS</span>
+                    </div>
+                </a>
+                <p class="text-gray-500 text-sm leading-relaxed mb-5">
+                    Nền tảng chia sẻ script Roblox chuyên nghiệp. Script chất lượng cao, an toàn và được cập nhật liên tục bởi đội ngũ TAScripts.
+                </p>
+                <div class="flex items-center gap-3">
+                    <a href="https://www.youtube.com/@tagamerr" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-red-500/20 text-gray-400 hover:text-red-400 transition-all border border-white/5">
+                        <i class="ri-youtube-line text-lg"></i>
+                    </a>
+                    <a href="https://discord.gg/dbVjXAazCU" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-indigo-500/20 text-gray-400 hover:text-indigo-400 transition-all border border-white/5">
+                        <i class="ri-discord-line text-lg"></i>
+                    </a>
+                    <a href="#" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-sky-500/20 text-gray-400 hover:text-sky-400 transition-all border border-white/5">
+                        <i class="ri-twitter-x-line text-lg"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold text-sm mb-5 uppercase tracking-widest">Danh mục</h4>
+                <ul class="space-y-3">
+                    <li><a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer" href="#">Script Mới Nhất</a></li>
+                    <li><a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer" href="#">Script Phổ Biến</a></li>
+                    <li><a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer" href="#">Script Hot</a></li>
+                    <li><a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer" href="#">Yêu Cầu Script</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold text-sm mb-5 uppercase tracking-widest">Nhận Script Mới</h4>
+                <p class="text-gray-500 text-sm mb-4">Đăng ký để nhận thông báo ngay khi có script Blox Fruits, Arsenal... mới nhất.</p>
+                <div class="flex flex-col gap-2">
+                    <input type="email" placeholder="Email của bạn..." class="bg-white/5 border border-white/10 text-white text-sm px-3 py-2.5 rounded-lg focus:outline-none focus:border-cyan-500/50 placeholder-gray-600 w-full transition-all">
+                    <button class="w-full py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-400 hover:to-cyan-500 text-white text-sm font-bold transition-all cursor-pointer shadow-lg shadow-cyan-500/10">
+                        Đăng Ký Ngay
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p class="text-gray-600 text-xs">© 2026 TAScripts - All rights reserved. Chỉ dành cho mục đích giải trí.</p>
+            <div class="flex items-center gap-5">
+                <a href="#" class="text-gray-600 hover:text-gray-400 text-xs transition-colors">Điều Khoản</a>
+                <a href="#" class="text-gray-600 hover:text-gray-400 text-xs transition-colors">Bảo Mật</a>
+                <a href="#" class="text-gray-600 hover:text-gray-400 text-xs transition-colors">DMCA</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<script>
+   document.getElementById('loginForm').onsubmit = function(e) {
+    e.preventDefault();
+    const userVal = document.getElementById('loginUsername').value.trim();
+    const passVal = document.getElementById('loginPassword').value;
+
+    let users = JSON.parse(localStorage.getItem('tascripts_users')) || [];
+    const account = users.find(u => u.username === userVal && u.password === passVal);
+
+    if (account) {
+        // Lưu đầy đủ thông tin bao gồm ROLE vào currentUser
+        localStorage.setItem('currentUser', JSON.stringify({
+            username: account.username,
+            email: account.email,
+            avatar: account.avatar,
+            role: account.role // <--- QUAN TRỌNG
+        }));
+
+        alert("Đăng nhập thành công!");
+        window.location.href = "index.html";
+    } else {
+        alert("Sai tài khoản hoặc mật khẩu!");
+    }
+};
+</script>
+</body>
+</html>

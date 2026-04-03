@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ Sơ Cá Nhân | TAScripts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        :root {
+            --dark-bg: #0a0a0f;
+            --card-bg: rgba(22, 23, 29, 0.7);
+            --cyan-accent: #06b6d4;
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--dark-bg);
+            color: #9ca3af;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+        }
+
+        .input-field {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: var(--cyan-accent);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+            outline: none;
+        }
+
+        .custom-scroll::-webkit-scrollbar { width: 5px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #1e1e26; border-radius: 10px; }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <body class="bg-[#0a0a0f] overflow-x-hidden font-sans">
+    <div id="top-banner" class="relative px-4 py-2.5 flex items-center justify-center gap-4 flex-wrap bg-slate-900/80 border-b border-white/5 z-[60] backdrop-blur-sm">
+        <div class="flex items-center gap-2 text-sm text-gray-300">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse flex-shrink-0"></span>
+            <span class="hidden sm:inline font-medium">Tham gia cộng đồng để nhận script mới nhất mỗi ngày!</span>
+            <span class="sm:hidden font-medium text-xs">Script mới mỗi ngày!</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <a href="https://discord.gg/dbVjXAazCU" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#5865F2]/20 hover:bg-[#5865F2]/40 border border-[#5865F2]/40 text-[#7b8dff] hover:text-white transition-all text-xs font-bold">
+                <i class="ri-discord-line text-sm"></i>
+                <span>Discord</span>
+                <span class="hidden sm:inline text-[#5865F2]/70 font-normal">• 12.4K</span>
+            </a>
+            <a href="https://www.youtube.com/@tagamerr" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600/20 hover:bg-red-600/40 border border-red-500/40 text-red-400 hover:text-white transition-all text-xs font-bold">
+                <i class="ri-youtube-line text-sm"></i>
+                <span>YouTube</span>
+                <span class="hidden sm:inline text-red-500/70 font-normal">• 85K</span>
+            </a>
+        </div>
+        <button onclick="document.getElementById('top-banner').remove()" class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/10 text-gray-500 hover:text-white transition-all">
+            <i class="ri-close-line text-sm"></i>
+        </button>
+    </div>
+
+    <nav class="px-6 lg:px-12 h-16 flex items-center justify-between bg-slate-900/50 backdrop-blur-md border-b border-white/5 sticky top-0 z-50">
+        <div class="flex items-center w-1/4">
+            <a class="flex items-center gap-2.5 cursor-pointer" href="/">
+                <div class="w-10 h-10 rounded-xl overflow-hidden ring-2 ring-cyan-500/30">
+                    <img alt="Logo" class="w-full h-full object-cover" src="/image/logo.png">
+                </div>
+                <span class="text-white font-black text-lg tracking-tight uppercase">TA Scripts</span>
+            </a>
+        </div>
+
+        <div class="hidden md:flex flex-1 justify-center items-center gap-7">
+            <a class="text-gray-300 hover:text-cyan-400 transition-colors text-sm font-medium" href="/index.html">Home</a>
+            <a class="text-gray-300 hover:text-cyan-400 transition-colors text-sm font-medium" href="/Executors.html">Executors</a>
+            <a class="text-gray-300 hover:text-cyan-400 transition-colors text-sm font-medium flex items-center gap-1" href="/Collaborate.html">
+                <i class="ri-send-plane-line text-xs"></i> Collaborate
+            </a>
+            <a id="admin-nav-btn" class="hidden text-yellow-400 hover:text-yellow-300 transition-colors text-sm font-medium" href="Admin.html">
+    <i class="ri-shield-star-line mr-1"></i> Admin
+</a>
+        </div>
+
+        <div class="flex items-center gap-3 justify-end w-1/4">
+            <div id="search-wrapper" class="flex items-center bg-white/5 border border-white/10 rounded-lg transition-all duration-300 group focus-within:border-cyan-500/50">
+                <input 
+                    id="search-input"
+                    type="text" 
+                    placeholder="Tìm script..." 
+                    class="w-0 opacity-0 pointer-events-none bg-transparent text-white text-sm py-1.5 focus:outline-none transition-all duration-300"
+                >
+                <button id="search-trigger" class="w-9 h-9 flex items-center justify-center text-gray-400 hover:text-cyan-400 transition-all cursor-pointer">
+                    <i id="search-icon" class="ri-search-line text-base"></i>
+                </button>
+            </div>
+
+            <div class="relative">
+                <button id="notification-trigger" class="relative w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-cyan-400 transition-all border border-white/10">
+                    <i class="ri-notification-3-line text-base"></i>
+                    <span class="absolute -top-1 -right-1 w-4 h-4 flex items-center justify-center bg-red-500 text-white text-[9px] font-black rounded-full ring-2 ring-[#07070c]">6</span>
+                </button>
+
+                <div id="notification-dropdown" class="hidden absolute top-full right-0 mt-3 w-[320px] bg-[#111118] border border-white/10 rounded-xl overflow-hidden shadow-2xl">
+                    <div class="flex items-center justify-between px-4 py-3 border-b border-white/8">
+                        <span class="text-white font-bold text-sm">Thông Báo</span>
+                        <button class="text-xs text-cyan-400 hover:text-cyan-300 transition-colors">Xem tất cả</button>
+                    </div>
+                    <div class="max-h-[300px] overflow-y-auto">
+                        <button class="w-full flex items-start gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left bg-cyan-500/[0.03] border-b border-white/5">
+                            <div class="w-8 h-8 rounded-lg flex items-center justify-center bg-cyan-500/20 text-cyan-400 border border-cyan-500/20">
+                                <i class="ri-notification-3-line text-sm"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-xs font-bold text-white truncate">Chào mừng đến TA Scripts!</p>
+                                <p class="text-gray-500 text-[11px] line-clamp-1">Tham gia Discord để được hỗ trợ.</p>
+                                <p class="text-gray-600 text-[9px] mt-1">Vừa xong</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="auth-section">
+                <a id="login-btn" href="/login.html" class="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 transition-all text-sm font-bold whitespace-nowrap">
+                    <i class="ri-login-box-line"></i> <span class="hidden sm:inline">Đăng Nhập</span>
+                </a>
+            </div>
+
+            <button class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 text-gray-300 border border-white/10">
+                <i class="ri-menu-line text-lg"></i>
+            </button>
+        </div>
+    </nav>
+
+    <script>
+        // Notification Logic
+        const notiTrigger = document.getElementById('notification-trigger');
+        const notiDropdown = document.getElementById('notification-dropdown');
+        
+        notiTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            notiDropdown.classList.toggle('hidden');
+            closeSearch(); 
+        });
+
+        // Search Logic
+        const searchTrigger = document.getElementById('search-trigger');
+        const searchInput = document.getElementById('search-input');
+        const searchWrapper = document.getElementById('search-wrapper');
+        const searchIcon = document.getElementById('search-icon');
+
+        searchTrigger.addEventListener('click', () => {
+            const isClosed = searchInput.classList.contains('w-0');
+            if (isClosed) {
+                searchInput.classList.remove('w-0', 'opacity-0', 'pointer-events-none');
+                searchInput.classList.add('w-[180px]', 'opacity-100', 'px-3');
+                searchIcon.classList.replace('ri-search-line', 'ri-close-line');
+                searchWrapper.classList.add('bg-black/40');
+                searchInput.focus();
+                notiDropdown.classList.add('hidden');
+            } else {
+                if (searchInput.value.trim() === "") closeSearch();
+                else console.log("Searching:", searchInput.value);
+            }
+        });
+
+        function closeSearch() {
+            searchInput.classList.add('w-0', 'opacity-0', 'pointer-events-none');
+            searchInput.classList.remove('w-[180px]', 'opacity-100', 'px-3');
+            searchIcon.classList.replace('ri-close-line', 'ri-search-line');
+            searchWrapper.classList.remove('bg-black/40');
+            searchInput.value = "";
+        }
+
+        // Global Click to close
+        document.addEventListener('click', (e) => {
+            if (!notiDropdown.contains(e.target) && e.target !== notiTrigger) notiDropdown.classList.add('hidden');
+            if (!searchWrapper.contains(e.target)) closeSearch();
+        });
+    </script>
+</body>
+
+    <main class="max-w-6xl mx-auto px-4 py-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <div class="lg:col-span-5 space-y-6">
+                <div class="glass-card rounded-[2.5rem] p-8 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-6">
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <div class="relative w-32 h-32 mx-auto group">
+                            <div class="w-full h-full rounded-full overflow-hidden ring-4 ring-cyan-500/20 p-1 bg-slate-800">
+                                <img id="user-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=ThaiAnh" class="w-full h-full rounded-full object-cover">
+                            </div>
+                            <label for="avatar-upload" class="absolute inset-0 flex items-center justify-center bg-black/60 rounded-full opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity">
+                                <i class="ri-camera-switch-line text-white text-2xl"></i>
+                                <input type="file" id="avatar-upload" class="hidden" accept="image/*">
+                            </label>
+                        </div>
+                        <h2 id="profile-display-name" class="text-white text-2xl font-black mt-4 uppercase tracking-tight">Thái Anh</h2>
+                        <p class="text-gray-500 text-xs">TA SCRIPT</p>
+                    </div>
+
+                    <div class="mt-8 space-y-5">
+                        <div>
+                            <label class="text-[10px] font-black text-gray-500 uppercase ml-1">Tên hiển thị</label>
+                            <input type="text" id="profile-input-name" class="w-full input-field rounded-xl px-4 py-3 text-white text-sm mt-1">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-black text-gray-500 uppercase ml-1">Email</label>
+                            <input type="email" id="profile-input-email" class="w-full input-field rounded-xl px-4 py-3 text-white text-sm mt-1 opacity-60 cursor-not-allowed" disabled>
+                        </div>
+                        <button onclick="updateProfile()" class="w-full py-4 bg-cyan-600 hover:bg-cyan-500 text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl transition-all shadow-lg shadow-cyan-900/20">
+                            Cập nhật thông tin
+                        </button>
+                        <button onclick="handleLogout()" class="w-full py-3 bg-red-500/10 border border-red-500/20 text-red-500 font-bold text-xs uppercase rounded-xl hover:bg-red-500 hover:text-white transition-all mt-2">
+                            Đăng xuất tài khoản
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+           <div class="lg:col-span-7">
+    <div class="glass-card rounded-[2.5rem] p-8 h-full flex flex-col">
+        <div class="flex items-center justify-between mb-8">
+            <h3 class="text-white font-black text-xl uppercase tracking-tight flex items-center gap-3">
+                <i class="ri-history-line text-cyan-500"></i> Bài viết đã xem
+            </h3>
+            <button onclick="clearHistory()" class="text-[10px] font-bold text-gray-500 hover:text-red-400 uppercase tracking-widest">Xóa lịch sử</button>
+        </div>
+
+        <div id="history-list" class="space-y-4 overflow-y-auto pr-2 custom-scroll flex-1 max-h-[600px]">
+            </div>
+
+        <div class="mt-8 pt-6 border-t border-white/5">
+            <p class="text-center text-[10px] text-gray-600 font-bold uppercase tracking-[0.2em]">Hệ thống ghi nhận hoạt động của bạn</p>
+        </div>
+    </div>
+</div>
+        </div>
+    </main>
+
+    <script>
+        // 1. Hàm Load thông tin khi vào trang
+        function initProfile() {
+            const userData = JSON.parse(localStorage.getItem('currentUser'));
+
+            if (!userData) {
+                alert("Bạn cần đăng nhập để xem hồ sơ!");
+                window.location.href = "login.html";
+                return;
+            }
+
+            // Gán dữ liệu vào HTML
+            document.getElementById('profile-display-name').innerText = userData.username;
+            document.getElementById('profile-input-name').value = userData.username;
+            document.getElementById('profile-input-email').value = userData.email || "ytbtagamer@gmail.com";
+            
+            if (userData.avatar) {
+                document.getElementById('user-avatar').src = userData.avatar;
+            }
+        }
+
+        // 2. Xử lý đổi Avatar
+        const avatarUpload = document.getElementById('avatar-upload');
+        const userAvatar = document.getElementById('user-avatar');
+
+        avatarUpload.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64Image = e.target.result;
+                    userAvatar.src = base64Image;
+
+                    // Lưu vào localStorage
+                    let userData = JSON.parse(localStorage.getItem('currentUser'));
+                    userData.avatar = base64Image;
+                    localStorage.setItem('currentUser', JSON.stringify(userData));
+                    alert("Đã thay đổi ảnh đại diện!");
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 3. Hàm cập nhật tên hiển thị
+        function updateProfile() {
+            const newName = document.getElementById('profile-input-name').value;
+            let userData = JSON.parse(localStorage.getItem('currentUser'));
+
+            if (newName.trim() === "") {
+                alert("Tên không được để trống!");
+                return;
+            }
+
+            userData.username = newName;
+            localStorage.setItem('currentUser', JSON.stringify(userData));
+            document.getElementById('profile-display-name').innerText = newName;
+            alert("Cập nhật thông tin thành công!");
+        }
+
+        // 4. Hàm đăng xuất
+        function handleLogout() {
+            if(confirm("Bạn có chắc muốn đăng xuất?")) {
+                localStorage.removeItem('currentUser');
+                window.location.href = "index.html";
+            }
+        }
+
+        // Khởi chạy khi trang sẵn sàng
+        document.addEventListener('DOMContentLoaded', initProfile);
+
+        // --- LOGIC CHO LỊCH SỬ BÀI VIẾT ---
+
+// 1. Hàm hiển thị lịch sử
+function displayViewHistory() {
+    const historyList = document.getElementById('history-list');
+    // Lấy dữ liệu từ localStorage (mảng các bài viết)
+    const history = JSON.parse(localStorage.getItem('viewHistory')) || [];
+
+    if (history.length === 0) {
+        historyList.innerHTML = `
+            <div class="text-center py-10">
+                <p class="text-gray-600 text-xs italic">Chưa có bài viết nào được xem</p>
+            </div>
+        `;
+        return;
+    }
+
+    // Đổ dữ liệu ra HTML (Đảo ngược mảng để bài mới nhất lên đầu)
+    historyList.innerHTML = history.reverse().map(item => `
+        <div class="flex items-center gap-4 p-3 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.05] transition-all group">
+            <div class="w-24 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                <img src="${item.image}" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 min-w-0">
+                <h4 class="text-white font-bold text-sm truncate group-hover:text-cyan-400">${item.title}</h4>
+                <p class="text-[10px] text-gray-500 mt-1 uppercase">
+                    ${item.time} • <span class="text-cyan-500/70 italic">${item.category}</span>
+                </p>
+            </div>
+            <a href="${item.link}" class="p-2 text-gray-600 hover:text-white transition-colors">
+                <i class="ri-external-link-line"></i>
+            </a>
+        </div>
+    `).join('');
+}
+
+// 2. Hàm xóa lịch sử
+function clearHistory() {
+    if (confirm("Bạn có chắc chắn muốn xóa toàn bộ lịch sử đã xem?")) {
+        localStorage.removeItem('viewHistory');
+        displayViewHistory(); // Cập nhật lại giao diện ngay lập tức
+    }
+}
+
+// --- CẬP NHẬT LẠI HÀM KHỞI CHẠY ---
+function initProfile() {
+    const userData = JSON.parse(localStorage.getItem('currentUser'));
+
+    if (!userData) {
+        alert("Bạn cần đăng nhập để xem hồ sơ!");
+        window.location.href = "login.html";
+        return;
+    }
+
+    document.getElementById('profile-display-name').innerText = userData.username;
+    document.getElementById('profile-input-name').value = userData.username;
+    document.getElementById('profile-input-email').value = userData.email || "ytbtagamer@gmail.com";
+    
+    if (userData.avatar) {
+        document.getElementById('user-avatar').src = userData.avatar;
+    }
+
+    // Gọi hàm hiển thị lịch sử
+    displayViewHistory();
+}
+
+document.addEventListener('DOMContentLoaded', initProfile);
+
+function displayViewHistory() {
+    const historyList = document.getElementById('history-list');
+    if(!historyList) return;
+
+    const history = JSON.parse(localStorage.getItem('viewHistory')) || [];
+
+    if (history.length === 0) {
+        historyList.innerHTML = `<p class="text-center text-gray-500 text-xs py-10 uppercase font-bold tracking-widest opacity-50">Lịch sử trống</p>`;
+        return;
+    }
+
+    // Hiển thị 10 bài gần nhất (mới nhất lên đầu)
+    historyList.innerHTML = history.slice().reverse().map(item => `
+        <div class="flex items-center gap-4 p-3 rounded-2xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.05] transition-all group">
+            <div class="w-24 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                <img src="${item.image}" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 min-w-0">
+                <h4 class="text-white font-bold text-sm truncate group-hover:text-cyan-400">${item.title}</h4>
+                <p class="text-[10px] text-gray-500 mt-1 uppercase italic">${item.time} • <span class="text-cyan-500">${item.category}</span></p>
+            </div>
+            <a href="${item.link}" class="p-2 text-gray-600 hover:text-white transition-colors">
+                <i class="ri-external-link-line"></i>
+            </a>
+        </div>
+    `).join('');
+}
+
+// Chạy khi trang profile load xong
+document.addEventListener('DOMContentLoaded', displayViewHistory);
+    </script>
+    <script src="js/auth.js"></script>
+    <script src="js/database.js"></script>
+</body>
+</html>

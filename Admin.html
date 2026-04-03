@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="image/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>TA SCRIPTS - Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0f; color: white; }
+        .glass-effect { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+        .tab-pane { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Style cho các ô input để đồng bộ với theme của bạn */
+        .form-input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.75rem; padding: 0.75rem 1rem; font-size: 0.875rem; color: white; outline: none; transition: all 0.2s; }
+        .form-label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; margin-bottom: 0.5rem; letter-spacing: 0.025em; }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <div class="relative px-4 py-2.5 flex items-center justify-center gap-4 flex-wrap bg-slate-900/80 border-b border-white/5 z-[60]">
+        <div class="flex items-center gap-2 text-sm text-gray-300">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse flex-shrink-0"></span>
+            <span class="hidden sm:inline font-medium">Tham gia cộng đồng để nhận script mới nhất mỗi ngày!</span>
+            <span class="sm:hidden font-medium text-xs">Script mới mỗi ngày!</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <a href="https://discord.gg/dbVjXAazCU" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#5865F2]/20 hover:bg-[#5865F2]/40 border border-[#5865F2]/40 text-[#7b8dff] hover:text-white transition-all text-xs font-bold">
+                <i class="ri-discord-line text-sm"></i>
+                <span>Discord</span>
+                <span class="hidden sm:inline text-[#5865F2]/70 font-normal">• 12.4K</span>
+            </a>
+            <a href="https://www.youtube.com/@tagamerr" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600/20 hover:bg-red-600/40 border border-red-500/40 text-red-400 hover:text-white transition-all text-xs font-bold">
+                <i class="ri-youtube-line text-sm"></i>
+                <span>YouTube</span>
+                <span class="hidden sm:inline text-red-500/70 font-normal">• 85K</span>
+            </a>
+        </div>
+        <button class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/10 text-gray-500 hover:text-white transition-all">
+            <i class="ri-close-line text-sm"></i>
+        </button>
+    </div>
+
+    <nav class="px-6 lg:px-12 h-16 flex items-center justify-between bg-slate-900/50 backdrop-blur-md border-b border-white/5 sticky top-0 z-50">
+        <div class="flex items-center w-1/4">
+            <a class="flex items-center gap-2.5 cursor-pointer" href="#">
+                <div class="w-10 h-10 rounded-xl overflow-hidden ring-2 ring-cyan-500/30">
+                    <img alt="Logo" class="w-full h-full object-cover" src="/image/logo.png">
+                </div>
+                <span class="text-white font-black text-lg tracking-tight uppercase">TAScripts</span>
+            </a>
+        </div>
+
+        <div class="hidden md:flex flex-1 justify-center items-center gap-7">
+            <a class="text-gray-300 hover:text-cyan-400 transition-colors text-sm font-medium" href="/index.html">Home</a>
+            <a class="text-gray-300 hover:text-cyan-400 transition-colors text-sm font-medium" href="/Executors.html">Executors</a>
+            <a class="text-gray-300 hover:text-cyan-400 transition-colors text-sm font-medium flex items-center gap-1" href="/Collaborate.html">
+                <i class="ri-send-plane-line text-xs"></i> Collaborate
+            </a>
+            <a class="text-yellow-400 hover:text-yellow-300 transition-colors text-sm font-medium" href="/Admin.html">
+                <i class="ri-shield-star-line mr-1"></i> Admin
+            </a>
+        </div>
+
+        <div class="flex items-center gap-3">
+    <div class="relative flex items-center justify-end">
+        <div id="search-wrapper" class="flex items-center bg-white/5 border border-white/10 rounded-lg transition-all duration-300 ease-in-out group focus-within:border-cyan-500/50">
+            <input 
+                id="search-input"
+                type="text" 
+                placeholder="Tìm script, game..." 
+                class="w-0 opacity-0 pointer-events-none bg-transparent text-white text-sm py-1.5 px-0 focus:outline-none placeholder-gray-500 transition-all duration-300 ease-in-out"
+            >
+            <button id="search-trigger" class="w-9 h-9 flex items-center justify-center text-gray-400 hover:text-cyan-400 transition-all cursor-pointer flex-shrink-0">
+                <i id="search-icon" class="ri-search-line text-base"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="relative">
+        <button id="notification-trigger" class="relative w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-cyan-400 transition-all cursor-pointer border border-white/10" aria-label="Thông báo">
+            <i class="ri-notification-3-line text-base"></i>
+            <span class="absolute -top-1 -right-1 w-4 h-4 flex items-center justify-center bg-red-500 text-white text-[9px] font-black rounded-full leading-none ring-2 ring-[#07070c]">6</span>
+        </button>
+
+        <div id="notification-dropdown" class="hidden absolute top-full right-0 mt-2 w-[340px] bg-[#111118] border border-white/10 rounded-xl overflow-hidden z-50 shadow-2xl">
+            <div class="flex items-center justify-between px-4 py-3 border-b border-white/8">
+    <div class="flex items-center gap-2">
+        <i class="ri-notification-3-line text-cyan-400 text-sm"></i>
+        <span class="text-white font-bold text-sm">Thông Báo</span>
+        <span id="unread-count-text" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/20 border border-red-500/30 text-red-400">
+            0 chưa đọc
+        </span>
+    </div>
+    <button id="read-all-btn" class="text-xs text-cyan-400 hover:text-cyan-300 transition-colors cursor-pointer">
+        Xem tất cả
+    </button>
+</div>
+
+<div class="max-h-[360px] overflow-y-auto custom-scrollbar">
+    <button class="noti-item w-full flex items-start gap-3 ...">
+        <div class="unread-dot w-2 h-2 rounded-full bg-cyan-400 flex-shrink-0 mt-1.5"></div>
+    </button>
+    </div>
+
+            <div class="max-h-[360px] overflow-y-auto custom-scrollbar">
+                <button class="w-full flex items-start gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left border-b border-white/5 bg-cyan-500/[0.03]">
+                    <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 border text-cyan-400 bg-cyan-500/15 border-cyan-500/20">
+                        <i class="ri-notification-3-line text-sm"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs font-bold leading-tight truncate text-white">Chào mừng đến TA SCRIPTS!</p>
+                        <p class="text-gray-500 text-xs mt-0.5 line-clamp-2 leading-relaxed">Tham gia Discord để nhận hỗ trợ kỹ thuật ngay.</p>
+                        <p class="text-gray-600 text-[10px] mt-1">2026-03-28</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <a id="login-btn" class="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 transition-all text-sm font-bold cursor-pointer whitespace-nowrap" href="/login.html">
+        <i class="ri-login-box-line"></i> Đăng Nhập
+    </a>
+
+    <button class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 text-gray-300 border border-white/10">
+        <i class="ri-menu-line text-lg"></i>
+    </button>
+</div>
+    </nav>
+
+    <main class="pt-10 pb-12 px-6 lg:px-12 max-w-[1440px] mx-auto">
+        <header class="mb-10">
+            <h1 class="text-3xl font-black italic uppercase tracking-tight">Hệ Thống Quản Trị</h1>
+            <p class="text-gray-500 text-sm">Quản lý nội dung Script và Executor của TA Scripts</p>
+        </header>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+    <div class="p-6 rounded-2xl glass-effect border-l-4 border-l-cyan-500">
+        <p class="text-gray-500 text-[10px] font-bold uppercase mb-1">Scripts</p>
+        <h3 id="admin-total-scripts" class="text-2xl font-black">0</h3>
+    </div>
+
+    <div class="p-6 rounded-2xl glass-effect border-l-4 border-l-teal-500">
+        <p class="text-gray-500 text-[10px] font-bold uppercase mb-1">Executors</p>
+        <h3 id="admin-total-executors" class="text-2xl font-black">0</h3>
+    </div>
+
+    <div class="p-6 rounded-2xl glass-effect border-l-4 border-l-yellow-500">
+        <p class="text-gray-500 text-[10px] font-bold uppercase mb-1">Lượt Xem</p>
+        <h3 id="admin-total-views" class="text-2xl font-black">0</h3>
+    </div>
+</div>
+        
+        <div class="flex items-center gap-1 bg-[#111118] border border-white/8 rounded-xl p-1 w-fit mb-8">
+            <button onclick="switchTab(this, 'list')" class="tab-btn px-6 py-2.5 rounded-lg text-sm font-bold transition-all cursor-pointer bg-gradient-to-r from-cyan-500/20 to-teal-500/20 text-cyan-400 border border-cyan-500/30">
+                <i class="ri-list-settings-line mr-2"></i>Danh Sách
+            </button>
+            <button onclick="switchTab(this, 'add-script')" class="tab-btn px-6 py-2.5 rounded-lg text-sm font-bold transition-all cursor-pointer text-gray-500 hover:text-gray-300">
+                <i class="ri-file-add-line mr-2"></i>Đăng Script
+            </button>
+            <button onclick="switchTab(this, 'add-executor')" class="tab-btn px-6 py-2.5 rounded-lg text-sm font-bold transition-all cursor-pointer text-gray-500 hover:text-gray-300">
+                <i class="ri-download-cloud-line mr-2"></i>Đăng Executor
+            </button>
+        </div>
+
+        <div id="tab-content">
+    <section id="content-list" class="tab-pane">
+        
+        <div class="space-y-4">
+            <div class="flex items-center justify-between mb-6 px-4">
+                <h3 class="text-white font-bold text-lg italic uppercase tracking-wider">Thông báo hợp tác</h3>
+                <span id="total-collab-count" class="text-orange-400 text-xs font-bold bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">0 Thông báo</span>
+            </div>
+
+            <div id="admin-collab-wrapper" class="grid grid-cols-1 gap-4">
+                <div class="rounded-3xl glass-effect p-20 text-center border border-white/5">
+                    <i class="ri-hand-coin-line text-6xl text-white/5 mb-4 block animate-pulse"></i>
+                    <p class="text-gray-500 italic uppercase text-xs tracking-widest">Đang tải thông báo...</p>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-white/5 my-8"> <div class="space-y-4">
+            <div class="flex items-center justify-between mb-6 px-4">
+                <h3 class="text-white font-bold text-lg italic uppercase tracking-wider">Danh Sách Script</h3>
+                <span id="total-script-count" class="text-cyan-400 text-xs font-bold bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">0 Bài viết</span>
+            </div>
+
+            <div id="admin-script-wrapper" class="grid grid-cols-1 gap-4">
+                <div class="rounded-3xl glass-effect p-20 text-center border border-white/5">
+                    <i class="ri-terminal-box-line text-6xl text-white/5 mb-4 block animate-pulse"></i>
+                    <p class="text-gray-500 italic uppercase text-xs tracking-widest">Đang tải Script...</p>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="space-y-4">
+            <div class="flex items-center justify-between mb-6 px-4">
+                <h3 class="text-white font-bold text-lg italic uppercase tracking-wider">Danh Sách Executor</h3>
+                <span id="total-executor-count" class="text-teal-400 text-xs font-bold bg-teal-500/10 px-3 py-1 rounded-full border border-teal-500/20">0 Executor</span>
+            </div>
+
+            <div id="admin-executor-wrapper" class="grid grid-cols-1 gap-4">
+                <div class="rounded-3xl glass-effect p-20 text-center border border-white/5">
+                    <i class="ri-shield-flash-line text-6xl text-white/5 mb-4 block animate-pulse"></i>
+                    <p class="text-gray-500 italic uppercase text-xs tracking-widest">Đang tải Executor...</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+
+            <section id="content-add-script" class="tab-pane hidden">
+                <div class="rounded-3xl glass-effect overflow-hidden max-w-5xl border-t-2 border-cyan-500/50 shadow-2xl shadow-cyan-500/5">
+                    <div class="px-6 py-4 border-b border-white/8 bg-white/5">
+                        <h2 class="text-white font-bold flex items-center gap-2 uppercase italic text-sm tracking-wide">
+                            <i class="ri-file-add-line text-cyan-400"></i>Đăng Script Mới
+                        </h2>
+                    </div>
+                   <form id="add-script-form" class="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="md:col-span-1">
+        <label class="form-label">Tiêu Đề Script <span class="text-red-500">*</span></label>
+        <input type="text" id="script-title" required placeholder="Ví dụ: Blox Fruits - Auto Farm v3.0" class="form-input focus:border-cyan-500">
+    </div>
+    <div class="md:col-span-1">
+        <label class="form-label">Tên Game <span class="text-red-500">*</span></label>
+        <input type="text" id="script-game" required placeholder="Ví dụ: Blox Fruits" class="form-input focus:border-cyan-500">
+    </div>
+
+    <div>
+        <label class="form-label">Badge</label>
+        <select id="script-badge" class="form-input bg-[#1a1a25] focus:border-cyan-500">
+            <option value="">Không có</option>
+            <option value="NEW">NEW</option>
+            <option value="HOT">HOT</option>
+            <option value="UPDATE">UPDATE</option>
+            <option value="FEATURED">FEATURED</option>
+        </select>
+    </div>
+    <div>
+        <label class="form-label">Link GET SCRIPT <span class="text-red-500">*</span></label>
+        <input type="url" id="script-link" required placeholder="https://..." class="form-input focus:border-cyan-500">
+    </div>
+
+    <div>
+        <label class="form-label">Link YouTube Showcase</label>
+        <div class="relative">
+            <i class="ri-youtube-fill absolute left-3 top-1/2 -translate-y-1/2 text-red-500"></i>
+            <input type="url" id="script-yt" placeholder="https://youtube.com/..." class="form-input pl-10 focus:border-red-500">
+        </div>
+    </div>
+    <div>
+        <label class="form-label">Tags (cách nhau bằng dấu phẩy)</label>
+        <input type="text" id="script-tags" placeholder="Auto Farm, ESP, Keyless..." class="form-input focus:border-cyan-500">
+    </div>
+
+    <div class="md:col-span-2">
+        <label class="form-label">Thumbnail Script (Link hoặc Tải ảnh)</label>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input type="url" id="script-thumb-url" placeholder="Dán link ảnh tại đây..." class="form-input focus:border-purple-500">
+            <div class="relative">
+                <input type="file" id="script-img-file" class="hidden" accept="image/*">
+                <label for="script-img-file" class="flex items-center justify-center gap-2 w-full bg-white/5 border border-dashed border-white/20 rounded-xl px-4 py-2.5 text-xs font-bold cursor-pointer hover:bg-white/10 transition-all">
+                    <i class="ri-image-add-line text-cyan-400"></i> Chọn ảnh từ máy
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="md:col-span-2">
+        <label class="form-label">Mô Tả <span class="text-red-500">*</span></label>
+        <textarea id="script-desc" rows="4" required placeholder="Nhập tính năng chi tiết..." class="form-input focus:border-cyan-500 resize-none h-32"></textarea>
+    </div>
+
+    <div class="md:col-span-2 flex justify-between pt-4">
+        <button type="button" onclick="location.reload()" class="px-6 py-2.5 rounded-xl border border-white/10 text-gray-400 font-bold hover:bg-white/5 transition-all text-sm">Hủy</button>
+        <button type="submit" class="px-10 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-cyan-400 text-black font-black uppercase italic hover:scale-105 transition-all text-sm shadow-lg shadow-cyan-500/20">Đăng Script</button>
+    </div>
+</form>
+                </div>
+            </section>
+
+            <section id="content-add-executor" class="tab-pane hidden">
+                <div class="rounded-3xl glass-effect overflow-hidden max-w-5xl border-t-2 border-teal-500/50 shadow-2xl shadow-teal-500/5">
+                    <div class="px-6 py-4 border-b border-white/8 bg-white/5">
+                        <h2 class="text-white font-bold flex items-center gap-2 uppercase italic text-sm tracking-wide">
+                            <i class="ri-download-cloud-line text-teal-400"></i>Đăng Executor Mới
+                        </h2>
+                    </div>
+                    <form id="form-executor" class="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div>
+        <label class="block text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-2">Tên Executor <span class="text-red-500">*</span></label>
+        <input type="text" name="name" id="exec-name" required placeholder="Ví dụ: Fluxus, Delta..." 
+            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-teal-500/50 transition-all">
+    </div>
+
+    <div>
+        <label class="block text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-2">Nền Tảng <span class="text-red-500">*</span></label>
+        <select id="exec-platform" class="w-full bg-[#1a1a25] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-teal-500/50 transition-all cursor-pointer">
+            <option value="PC">PC (Windows)</option>
+            <option value="Android">Mobile (Android)</option>
+            <option value="iOS">Mobile (iOS)</option>
+            <option value="Mobile">Mobile (Cả hai)</option>
+        </select>
+    </div>
+
+    <div>
+        <label class="block text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-2">Giá Executor <span class="text-red-500">*</span></label>
+        <input type="text" name="price" id="exec-price" required placeholder="Ví dụ: Miễn phí, 20$..." 
+            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-teal-500/50 transition-all">
+    </div>
+
+    <div>
+        <label class="block text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-2">Hệ Thống Key</label>
+        <select name="keySystem" id="exec-key" class="w-full bg-[#1a1a25] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-teal-500/50 transition-all cursor-pointer">
+            <option value="Free">Key miễn phí hàng ngày</option>
+            <option value="Paid">Cần key trả phí (Premium)</option>
+            <option value="NoKey">Không cần key</option>
+        </select>
+    </div>
+
+    <div class="md:col-span-2">
+        <label class="block text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-2">Link Download <span class="text-red-500">*</span></label>
+        <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-1 focus-within:border-teal-500/50 transition-all">
+            <i class="ri-download-2-line text-teal-400"></i>
+            <input type="url" name="downloadUrl" id="exec-link" required placeholder="https://..." 
+                class="bg-transparent flex-1 py-3 text-sm text-white outline-none">
+        </div>
+    </div>
+
+    <div class="md:col-span-2">
+        <label class="block text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-2">Thumbnail Executor (Link hoặc Tải ảnh)</label>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input type="url" name="thumbLink" id="exec-thumb-url" placeholder="Dán link ảnh tại đây..." 
+                class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-teal-500/50 transition-all">
+            
+            <div class="relative">
+                <input type="file" id="exec-img" accept="image/*" class="hidden">
+                <label for="exec-img" class="flex items-center justify-center gap-2 w-full bg-white/5 border border-dashed border-white/20 rounded-xl px-4 py-3 text-xs font-bold text-gray-400 cursor-pointer hover:bg-white/10 hover:text-white hover:border-teal-500/50 transition-all">
+                    <i class="ri-image-2-line text-teal-400 text-base"></i> Chọn ảnh từ máy
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="md:col-span-2">
+        <label class="block text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-2">Mô Tả Executor <span class="text-red-500">*</span></label>
+        <textarea name="description" id="exec-desc" required placeholder="Mô tả ưu điểm, tính năng..." 
+            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-teal-500/50 transition-all resize-none h-32"></textarea>
+    </div>
+
+    <div class="md:col-span-2 flex items-center justify-between pt-4">
+        <button type="button" onclick="location.reload()" 
+            class="px-6 py-3 rounded-xl border border-white/10 text-gray-400 font-bold hover:bg-white/5 transition-all text-xs uppercase tracking-widest">
+            Hủy
+        </button>
+        <button id="btn-submit-exec" type="button" class="px-10 py-3 rounded-xl bg-gradient-to-r from-teal-600 to-teal-400 text-black font-black uppercase italic hover:scale-105 active:scale-95 transition-all text-xs shadow-lg shadow-teal-500/20">
+            Đăng Executor
+        </button>
+    </div>
+</form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+// --- 1. HÀM LẤY DỮ LIỆU CHUẨN ---
+function getExecutors() {
+    return JSON.parse(localStorage.getItem('admin_executors')) || [];
+}
+
+// --- 2. HÀM LƯU DỮ LIỆU CHUẨN ---
+function saveExecutors(data) {
+    localStorage.setItem('admin_executors', JSON.stringify(data));
+}
+
+// --- 3. HÀM VẼ DANH SÁCH (RENDER) ---
+function renderAdminExecutors() {
+    const wrapper = document.getElementById('admin-executor-wrapper');
+    if (!wrapper) return;
+
+    const currentData = getExecutors();
+    
+    // Cập nhật Dashboard
+    const countTop = document.getElementById('admin-total-executors');
+    const countSub = document.getElementById('total-executor-count');
+    if (countTop) countTop.innerText = currentData.length;
+    if (countSub) countSub.innerText = currentData.length + " Executor";
+
+    if (currentData.length === 0) {
+        wrapper.innerHTML = `<div class="p-10 text-center text-gray-500 italic text-xs uppercase">Danh sách trống.</div>`;
+        return;
+    }
+
+    wrapper.innerHTML = currentData.map((exec, index) => `
+        <div class="flex items-center justify-between bg-white/5 border border-white/10 p-4 rounded-2xl mb-3">
+            <div class="flex items-center gap-4">
+                <img src="${exec.image}" class="w-12 h-12 rounded-xl object-cover border border-white/10" onerror="this.src='image/logo.png'">
+                <div>
+                    <h4 class="text-white font-bold text-sm">${exec.name}</h4> 
+                    <span class="text-[9px] px-2 py-0.5 rounded bg-teal-500/20 text-teal-400 font-black uppercase">${exec.platform}</span>
+                </div>
+            </div>
+            <button onclick="deleteExecutor(${index})" class="w-10 h-10 flex items-center justify-center text-red-500 hover:bg-red-500/10 rounded-xl transition-all">
+                <i class="ri-delete-bin-line text-lg"></i>
+            </button>
+        </div>
+    `).join('');
+}
+
+// --- 4. HÀM XÓA (XÓA TRIỆT ĐỂ) ---
+function deleteExecutor(index) {
+    if (confirm("M có chắc muốn xóa không Thái Anh?")) {
+        let data = getExecutors();
+        data.splice(index, 1); // Xóa khỏi mảng
+        saveExecutors(data);   // Lưu đè lại localStorage
+        renderAdminExecutors(); // Vẽ lại giao diện ngay
+    }
+}
+
+// --- 5. HÀM SETUP UI HEADER (FIX LỖI NOT DEFINED) ---
+function setupHeaderUI() {
+    const notiTrigger = document.getElementById('notification-trigger');
+    const notiDropdown = document.getElementById('notification-dropdown');
+    const searchTrigger = document.getElementById('search-trigger');
+    const searchInput = document.getElementById('search-input');
+
+    if (searchTrigger && searchInput) {
+        searchTrigger.onclick = (e) => {
+            e.stopPropagation();
+            searchInput.classList.toggle('w-0');
+            searchInput.classList.toggle('w-[200px]');
+            searchInput.classList.toggle('opacity-0');
+            searchInput.classList.toggle('px-3');
+            if(!searchInput.classList.contains('w-0')) searchInput.focus();
+        };
+    }
+    if (notiTrigger && notiDropdown) {
+        notiTrigger.onclick = (e) => {
+            e.stopPropagation();
+            notiDropdown.classList.toggle('hidden');
+        };
+    }
+    document.addEventListener('click', () => {
+        if(notiDropdown) notiDropdown.classList.add('hidden');
+    });
+}
+
+// --- 6. HÀM CHUYỂN TAB ---
+function switchTab(element, tabId) {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-gradient-to-r', 'from-cyan-500/20', 'to-teal-500/20', 'text-cyan-400', 'border', 'border-cyan-500/30');
+        btn.classList.add('text-gray-500');
+    });
+    if (element) element.classList.add('bg-gradient-to-r', 'from-cyan-500/20', 'to-teal-500/20', 'text-cyan-400', 'border', 'border-cyan-500/30');
+
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+    const target = document.getElementById('content-' + tabId);
+    if (target) target.classList.remove('hidden');
+
+    renderAdminExecutors(); // Luôn render lại khi đổi tab để cập nhật data mới nhất
+}
+
+// --- 7. KHỞI CHẠY (BẢN FIX TRIỆT ĐỂ) ---
+document.addEventListener('DOMContentLoaded', () => {
+    setupHeaderUI();
+    renderAdminExecutors();
+
+    const btnSubmit = document.getElementById('btn-submit-exec');
+    if (btnSubmit) {
+        btnSubmit.onclick = function(e) {
+            e.preventDefault();
+            
+            const nameInput = document.getElementById('exec-name');
+            const nameValue = nameInput.value.trim();
+            
+            if (!nameValue) return alert("Nhập tên đã m ơi!");
+
+            // 1. ÉP TRÌNH DUYỆT ĐỌC LẠI LOCALSTORAGE NGAY TẠI ĐÂY
+            // Không dùng biến trung gian nào ở ngoài hết, cứ gọi thẳng Storage ra
+            let freshData = JSON.parse(localStorage.getItem('admin_executors')) || [];
+
+            // 2. Tạo đối tượng mới
+            const newObj = {
+                name: nameValue,
+                platform: document.getElementById('exec-platform').value,
+                image: document.getElementById('exec-thumb-url').value || "image/logo.png",
+                id: Date.now() // Dùng timestamp làm ID để không bao giờ trùng
+            };
+
+            // 3. Thêm vào đầu mảng dữ liệu vừa lấy "tươi" xong
+            freshData.unshift(newObj);
+
+            // 4. LƯU ĐÈ NGAY LẬP TỨC
+            localStorage.setItem('admin_executors', JSON.stringify(freshData));
+
+            // 5. Reset form và thông báo
+            document.getElementById('form-executor').reset();
+            alert("Đã đăng xong: " + nameValue);
+            
+            // 6. CẬP NHẬT GIAO DIỆN VÀ CHUYỂN TAB
+            renderAdminExecutors(); // Vẽ lại danh sách để nó nhận data mới nhất
+            
+            const listBtn = document.querySelector('[onclick*="list"]');
+            if (listBtn) {
+                switchTab(listBtn, 'list');
+            }
+        };
+    }
+});
+</script>
+<footer class="bg-[#07070c] border-t border-white/5 pt-14 pb-8">
+    <div class="px-6 lg:px-12 max-w-screen-xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+            
+            <div>
+                <a class="flex items-center gap-2 mb-4 cursor-pointer" href="/">
+                    <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-purple-600">
+                        <img alt="Logo" class="w-full h-full object-cover" src="/image/logo.png">
+                    </div>
+                    <div>
+                        <span class="text-white font-black text-lg">TASCRIPTS</span>
+                    </div>
+                </a>
+                <p class="text-gray-500 text-sm leading-relaxed mb-5">
+                    Nền tảng chia sẻ script Roblox chuyên nghiệp. Script chất lượng cao, an toàn và được cập nhật liên tục bởi đội ngũ TAScripts.
+                </p>
+                <div class="flex items-center gap-3">
+                    <a href="https://www.youtube.com/@tagamerr" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-red-500/20 text-gray-400 hover:text-red-400 transition-all border border-white/5">
+                        <i class="ri-youtube-line text-lg"></i>
+                    </a>
+                    <a href="https://discord.gg/dbVjXAazCU" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-indigo-500/20 text-gray-400 hover:text-indigo-400 transition-all border border-white/5">
+                        <i class="ri-discord-line text-lg"></i>
+                    </a>
+                    <a href="#" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-sky-500/20 text-gray-400 hover:text-sky-400 transition-all border border-white/5">
+                        <i class="ri-twitter-x-line text-lg"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold text-sm mb-5 uppercase tracking-widest">Danh mục</h4>
+                <ul class="space-y-3">
+                    <li><a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer" href="#">Script Mới Nhất</a></li>
+                    <li><a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer" href="#">Script Phổ Biến</a></li>
+                    <li><a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer" href="#">Script Hot</a></li>
+                    <li><a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer" href="#">Yêu Cầu Script</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold text-sm mb-5 uppercase tracking-widest">Nhận Script Mới</h4>
+                <p class="text-gray-500 text-sm mb-4">Đăng ký để nhận thông báo ngay khi có script Blox Fruits, Arsenal... mới nhất.</p>
+                <div class="flex flex-col gap-2">
+                    <input type="email" placeholder="Email của bạn..." class="bg-white/5 border border-white/10 text-white text-sm px-3 py-2.5 rounded-lg focus:outline-none focus:border-cyan-500/50 placeholder-gray-600 w-full transition-all">
+                    <button class="w-full py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-400 hover:to-cyan-500 text-white text-sm font-bold transition-all cursor-pointer shadow-lg shadow-cyan-500/10">
+                        Đăng Ký Ngay
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p class="text-gray-600 text-xs">© 2026 TAScripts - All rights reserved. Chỉ dành cho mục đích giải trí.</p>
+            <div class="flex items-center gap-5">
+                <a href="#" class="text-gray-600 hover:text-gray-400 text-xs transition-colors">Điều Khoản</a>
+                <a href="#" class="text-gray-600 hover:text-gray-400 text-xs transition-colors">Bảo Mật</a>
+                <a href="#" class="text-gray-600 hover:text-gray-400 text-xs transition-colors">DMCA</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="js/auth.js"></script>
+<script src="js/database.js"></script>
+</body>
+</html>

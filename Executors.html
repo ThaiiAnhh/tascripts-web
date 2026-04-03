@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="image/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TA SCRIPTS - Roblox Script</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0f; /* Đổi thành màu gần đen của giao diện gốc */
+        }
+    </style>
+</head>
+<body class="bg-[#0a0a0f] overflow-x-hidden">
+
+    <div class="relative px-4 py-2.5 flex items-center justify-center gap-4 flex-wrap bg-slate-900/80 border-b border-white/5 z-[60]">
+        <div class="flex items-center gap-2 text-sm text-gray-300">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse flex-shrink-0"></span>
+            <span class="hidden sm:inline font-medium">Tham gia cộng đồng để nhận script mới nhất mỗi ngày!</span>
+            <span class="sm:hidden font-medium text-xs">Script mới mỗi ngày!</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <a href="https://discord.gg/dbVjXAazCU" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#5865F2]/20 hover:bg-[#5865F2]/40 border border-[#5865F2]/40 text-[#7b8dff] hover:text-white transition-all text-xs font-bold">
+                <i class="ri-discord-line text-sm"></i>
+                <span>Discord</span>
+                <span class="hidden sm:inline text-[#5865F2]/70 font-normal">• 12.4K</span>
+            </a>
+            <a href="https://www.youtube.com/@tagamerr" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600/20 hover:bg-red-600/40 border border-red-500/40 text-red-400 hover:text-white transition-all text-xs font-bold">
+                <i class="ri-youtube-line text-sm"></i>
+                <span>YouTube</span>
+                <span class="hidden sm:inline text-red-500/70 font-normal">• 85K</span>
+            </a>
+        </div>
+        <button class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/10 text-gray-500 hover:text-white transition-all">
+            <i class="ri-close-line text-sm"></i>
+        </button>
+    </div>
+
+    <nav class="px-6 lg:px-12 h-16 flex items-center justify-between bg-slate-900/50 backdrop-blur-md border-b border-white/5 sticky top-0 z-50">
+        <div class="flex items-center w-1/4">
+            <a class="flex items-center gap-2.5 cursor-pointer" href="#">
+                <div class="w-10 h-10 rounded-xl overflow-hidden ring-2 ring-cyan-500/30">
+                    <img alt="Logo" class="w-full h-full object-cover" src="/image/logo.png">
+                </div>
+                <span class="text-white font-black text-lg tracking-tight uppercase">TA Scripts</span>
+            </a>
+        </div>
+
+        <div class="hidden md:flex flex-1 justify-center items-center gap-7">
+            <a class="text-gray-300 hover:text-cyan-400 transition-colors text-sm font-medium" href="/index.html">Home</a>
+            <a class="text-gray-300 hover:text-cyan-400 transition-colors text-sm font-medium" href="/Executors.html">Executors</a>
+            <a class="text-gray-300 hover:text-cyan-400 transition-colors text-sm font-medium flex items-center gap-1" href="/Collaborate.html">
+                <i class="ri-send-plane-line text-xs"></i> Collaborate
+            </a>
+            <a id="admin-nav-btn" class="hidden text-yellow-400 hover:text-yellow-300 transition-colors text-sm font-medium" href="Admin.html">
+    <i class="ri-shield-star-line mr-1"></i> Admin
+</a>
+        </div>
+
+        <div class="flex items-center gap-3">
+    <div class="relative flex items-center justify-end">
+        <div id="search-wrapper" class="flex items-center bg-white/5 border border-white/10 rounded-lg transition-all duration-300 ease-in-out group focus-within:border-cyan-500/50">
+            <input 
+                id="search-input"
+                type="text" 
+                placeholder="Tìm script, game..." 
+                class="w-0 opacity-0 pointer-events-none bg-transparent text-white text-sm py-1.5 px-0 focus:outline-none placeholder-gray-500 transition-all duration-300 ease-in-out"
+            >
+            <button id="search-trigger" class="w-9 h-9 flex items-center justify-center text-gray-400 hover:text-cyan-400 transition-all cursor-pointer flex-shrink-0">
+                <i id="search-icon" class="ri-search-line text-base"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="relative">
+        <button id="notification-trigger" class="relative w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-cyan-400 transition-all cursor-pointer border border-white/10" aria-label="Thông báo">
+            <i class="ri-notification-3-line text-base"></i>
+            <span class="absolute -top-1 -right-1 w-4 h-4 flex items-center justify-center bg-red-500 text-white text-[9px] font-black rounded-full leading-none ring-2 ring-[#07070c]">6</span>
+        </button>
+
+        <div id="notification-dropdown" class="hidden absolute top-full right-0 mt-2 w-[340px] bg-[#111118] border border-white/10 rounded-xl overflow-hidden z-50 shadow-2xl">
+            <div class="flex items-center justify-between px-4 py-3 border-b border-white/8">
+    <div class="flex items-center gap-2">
+        <i class="ri-notification-3-line text-cyan-400 text-sm"></i>
+        <span class="text-white font-bold text-sm">Thông Báo</span>
+        <span id="unread-count-text" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-500/20 border border-red-500/30 text-red-400">
+            6 chưa đọc
+        </span>
+    </div>
+    <button id="read-all-btn" class="text-xs text-cyan-400 hover:text-cyan-300 transition-colors cursor-pointer">
+        Xem tất cả
+    </button>
+</div>
+
+<div class="max-h-[360px] overflow-y-auto custom-scrollbar">
+    <button class="noti-item w-full flex items-start gap-3 ...">
+        <div class="unread-dot w-2 h-2 rounded-full bg-cyan-400 flex-shrink-0 mt-1.5"></div>
+    </button>
+    </div>
+
+            <div class="max-h-[360px] overflow-y-auto custom-scrollbar">
+                <button class="w-full flex items-start gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left border-b border-white/5 bg-cyan-500/[0.03]">
+                    <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 border text-cyan-400 bg-cyan-500/15 border-cyan-500/20">
+                        <i class="ri-notification-3-line text-sm"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs font-bold leading-tight truncate text-white">Chào mừng đến TASCRIPTS!</p>
+                        <p class="text-gray-500 text-xs mt-0.5 line-clamp-2 leading-relaxed">Tham gia Discord để nhận hỗ trợ kỹ thuật ngay.</p>
+                        <p class="text-gray-600 text-[10px] mt-1">2026-03-28</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="auth-section" class="flex items-center">
+    <a id="login-btn" href="/login.html" class="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 transition-all text-sm font-bold cursor-pointer whitespace-nowrap">
+        <i class="ri-login-box-line"></i> Đăng Nhập
+    </a>
+
+    <div id="user-info" class="hidden flex items-center gap-3 bg-white/5 border border-white/10 py-1 pl-1 pr-3 rounded-full hover:bg-white/10 transition-all cursor-pointer" onclick="location.href='/profile.html'">
+        <div class="w-8 h-8 rounded-full overflow-hidden ring-2 ring-cyan-500/30 flex-shrink-0">
+            <img id="nav-user-avatar" src="" alt="Avatar" class="w-full h-full object-cover">
+        </div>
+        <span id="nav-user-name" class="text-white text-xs font-black uppercase tracking-tight truncate max-w-[100px]">
+            Tên Người Dùng
+        </span>
+    </div>
+    </div>
+
+    <button class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 text-gray-300 border border-white/10">
+        <i class="ri-menu-line text-lg"></i>
+    </button>
+</div>
+<script>
+    // Khai báo các biến cần thiết
+    const readAllBtn = document.getElementById('read-all-btn');
+    const unreadText = document.getElementById('unread-count-text');
+    const badgeCount = document.querySelector('#notification-trigger span'); // Cái số 6 đỏ ở ngoài nút chuông
+    const unreadDots = document.querySelectorAll('.unread-dot');
+    const notiItems = document.querySelectorAll('.noti-item'); // Nếu bạn muốn đổi màu nền item khi đã đọc
+
+    readAllBtn.addEventListener('click', () => {
+        // 1. Cập nhật văn bản hiển thị thành "0 chưa đọc" hoặc ẩn đi
+        if (unreadText) {
+            unreadText.innerText = "0 chưa đọc";
+            unreadText.classList.replace('text-red-400', 'text-gray-500');
+            unreadText.classList.replace('bg-red-500/20', 'bg-white/5');
+            unreadText.classList.replace('border-red-500/30', 'border-white/10');
+        }
+
+        // 2. Ẩn số thông báo màu đỏ ở ngoài nút chuông
+        if (badgeCount) {
+            badgeCount.style.display = 'none'; 
+        }
+
+        // 3. Ẩn tất cả các dấu chấm xanh (unread dots)
+        unreadDots.forEach(dot => {
+            dot.classList.add('hidden');
+        });
+
+        // 4. (Tùy chọn) Đổi màu nền các thông báo về dạng "đã đọc"
+        notiItems.forEach(item => {
+            item.classList.remove('bg-cyan-500/[0.03]'); // Bỏ màu nền sáng
+        });
+
+        console.log("Đã đánh dấu đọc tất cả!");
+    });
+</script>
+<script>
+    const notiTrigger = document.getElementById('notification-trigger');
+    const notiDropdown = document.getElementById('notification-dropdown');
+
+    // 1. Click vào chuông để Đóng/Mở
+    notiTrigger.addEventListener('click', (e) => {
+        e.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+        notiDropdown.classList.toggle('hidden');
+        
+        // Nếu mở thông báo, có thể đóng ô tìm kiếm nếu nó đang mở
+        if(typeof closeSearch === 'function') closeSearch(); 
+    });
+
+    // 2. Click ra ngoài để đóng bảng thông báo
+    document.addEventListener('click', (e) => {
+        if (!notiDropdown.contains(e.target) && e.target !== notiTrigger) {
+            notiDropdown.classList.add('hidden');
+        }
+    });
+
+    // 3. Ngăn đóng bảng khi click bên trong bảng thông báo
+    notiDropdown.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+</script>
+<script>
+    const searchTrigger = document.getElementById('search-trigger');
+    const searchInput = document.getElementById('search-input');
+    const searchWrapper = document.getElementById('search-wrapper');
+    const searchIcon = document.getElementById('search-icon');
+
+    searchTrigger.addEventListener('click', () => {
+        // Kiểm tra xem đang đóng hay mở
+        const isClosed = searchInput.classList.contains('w-0');
+
+        if (isClosed) {
+            // MỞ: Hiện ô input
+            searchInput.classList.remove('w-0', 'opacity-0', 'pointer-events-none', 'px-0');
+            searchInput.classList.add('w-[200px]', 'opacity-100', 'px-3'); // Độ dài khi mở là 200px
+            searchIcon.classList.replace('ri-search-line', 'ri-close-line'); // Đổi icon sang dấu X
+            searchWrapper.classList.add('bg-[#0a0a0f]/90', 'border-cyan-500/50');
+            searchInput.focus(); // Tự động đưa chuột vào ô nhập
+        } else {
+            // ĐÓNG: Nếu có chữ thì thực hiện tìm kiếm, nếu trống thì thu nhỏ lại
+            if (searchInput.value.trim() !== "") {
+                console.log("Đang tìm kiếm:", searchInput.value);
+                // Thêm logic tìm kiếm của bạn ở đây
+            } else {
+                closeSearch();
+            }
+        }
+    });
+
+    // Hàm đóng ô tìm kiếm
+    function closeSearch() {
+        searchInput.classList.add('w-0', 'opacity-0', 'pointer-events-none', 'px-0');
+        searchInput.classList.remove('w-[200px]', 'opacity-100', 'px-3');
+        searchIcon.classList.replace('ri-close-line', 'ri-search-line');
+        searchWrapper.classList.remove('bg-[#0a0a0f]/90', 'border-cyan-500/50');
+        searchInput.value = ""; // Xóa chữ khi đóng
+    }
+
+    // Đóng khi bấm ra ngoài
+    document.addEventListener('click', (e) => {
+        if (!searchWrapper.contains(e.target) && !searchInput.classList.contains('w-0')) {
+            closeSearch();
+        }
+    });
+</script>
+    </nav>
+    <div class="relative pt-28 pb-12 px-6 lg:px-12 overflow-hidden bg-[#07070c]">
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-[600px] h-[400px] bg-teal-500/5 rounded-full blur-[120px]"></div>
+        <div class="absolute top-10 right-1/4 w-[400px] h-[300px] bg-cyan-500/5 rounded-full blur-[100px]"></div>
+    </div>
+
+    <div class="max-w-screen-xl mx-auto relative">
+        <div class="flex items-center gap-2 mb-5">
+            <a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer font-medium" href="/">Trang Chủ</a>
+            <i class="ri-arrow-right-s-line text-gray-600 text-sm"></i>
+            <span class="text-gray-300 text-sm font-medium">Executors</span>
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <div class="flex-1">
+                <div class="inline-flex items-center gap-2 bg-teal-500/10 border border-teal-500/20 text-teal-400 text-xs px-3 py-1.5 rounded-full mb-4 font-bold tracking-wide uppercase">
+                    <i class="ri-download-cloud-line text-sm"></i>
+                    Download Miễn Phí
+                </div>
+                <h1 class="text-white font-black text-3xl md:text-5xl mb-3 leading-tight tracking-tight">
+                    Tải <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-400">Executor</span> Roblox
+                </h1>
+                <p class="text-gray-400 text-base max-w-xl leading-relaxed">
+                    Chọn executor phù hợp nhất với thiết bị của bạn. Chúng tôi hỗ trợ đầy đủ cho cả <span class="text-gray-200">PC và Mobile</span>, cam kết an toàn và có hướng dẫn cài đặt chi tiết từng bước.
+                </p>
+            </div>
+
+            <div class="flex items-center gap-2 flex-wrap md:flex-nowrap">
+                <div id="filter-buttons" class="flex items-center gap-3">
+                    <button data-filter="all" class="filter-btn px-5 py-2 rounded-full text-xs font-bold transition-all cursor-pointer whitespace-nowrap border bg-cyan-500 border-cyan-500 text-white shadow-lg shadow-cyan-500/20 active:scale-95">
+                        <i class="ri-apps-line mr-1"></i>Tất Cả
+                    </button>
+                    <button data-filter="PC" class="filter-btn px-5 py-2 rounded-full text-xs font-bold transition-all cursor-pointer whitespace-nowrap border border-white/10 bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all active:scale-95">
+                        <i class="ri-computer-line mr-1"></i>PC
+                    </button>
+                    <button data-filter="Mobile" class="filter-btn px-5 py-2 rounded-full text-xs font-bold transition-all cursor-pointer whitespace-nowrap border border-white/10 bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all active:scale-95">
+                        <i class="ri-smartphone-line mr-1"></i>Mobile
+                    </button>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="px-6 lg:px-12 pb-16 bg-[#07070c]">
+    <div class="max-w-screen-xl mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            <div class="bg-[#111118] border border-white/5 rounded-xl p-5 flex items-center gap-4 shadow-sm">
+                <div class="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-lg bg-white/5 border border-white/10">
+                    <i class="ri-apps-line text-cyan-400 text-lg"></i>
+                </div>
+                <div>
+                    <p class="text-cyan-400 font-black text-lg leading-none">6</p>
+                    <p class="text-gray-500 text-xs mt-0.5 font-medium">Executor có sẵn</p>
+                </div>
+            </div>
+            <div class="bg-[#111118] border border-white/5 rounded-xl p-5 flex items-center gap-4 shadow-sm">
+                <div class="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-lg bg-white/5 border border-white/10">
+                    <i class="ri-device-line text-teal-400 text-lg"></i>
+                </div>
+                <div>
+                    <p class="text-teal-400 font-black text-lg leading-none">PC & Mobile</p>
+                    <p class="text-gray-500 text-xs mt-0.5 font-medium">Nền tảng hỗ trợ</p>
+                </div>
+            </div>
+            <div class="bg-[#111118] border border-white/5 rounded-xl p-5 flex items-center gap-4 shadow-sm">
+                <div class="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-lg bg-white/5 border border-white/10">
+                    <i class="ri-download-cloud-line text-emerald-400 text-lg"></i>
+                </div>
+                <div>
+                    <p class="text-emerald-400 font-black text-lg leading-none">27M+</p>
+                    <p class="text-gray-500 text-xs mt-0.5 font-medium">Tổng lượt tải</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="executors-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+            
+            <div class="group bg-gradient-to-br from-pink-600/10 to-rose-700/5 border border-pink-500/20 rounded-2xl p-6 flex flex-col gap-4 hover:border-pink-500/40 hover:scale-[1.02] transition-all duration-300">
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 flex items-center justify-center rounded-xl border border-pink-500/30 bg-black/40">
+                            <i class="ri-flashlight-line text-2xl text-pink-400"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-white font-black text-lg leading-tight">Synapse X</h2>
+                            <div class="flex items-center gap-1.5 mt-1 flex-wrap">
+                                <span class="text-[10px] px-2 py-0.5 rounded-full border font-bold bg-pink-500/20 text-pink-400 border-pink-500/30">PC</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-gray-400 font-medium border border-white/5">Level 8</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right flex-shrink-0">
+                        <p class="font-black text-sm text-white">Premium $20</p>
+                        <div class="flex items-center gap-0.5 justify-end mt-0.5">
+                            <i class="ri-star-fill text-yellow-400 text-[10px]"></i>
+                            <span class="text-gray-400 text-xs">4.9</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed line-clamp-3">Executor mạnh nhất hiện nay. Hỗ trợ hầu hết mọi script Roblox, ổn định tuyệt đối và gần như không bị phát hiện.</p>
+                <div class="grid grid-cols-2 gap-y-2">
+                    <div class="flex items-center gap-1.5 text-[11px] text-gray-300"><i class="ri-check-line text-emerald-400"></i>Không cần key</div>
+                    <div class="flex items-center gap-1.5 text-[11px] text-gray-300"><i class="ri-check-line text-emerald-400"></i>Level 8 Power</div>
+                    <div class="flex items-center gap-1.5 text-[11px] text-gray-300"><i class="ri-check-line text-emerald-400"></i>Ổn định 100%</div>
+                </div>
+                <div class="flex gap-2 pt-2 mt-auto">
+                    <a href="#" class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 text-white transition-all shadow-lg shadow-cyan-500/10">Tải Ngay</a>
+                    <a href="https://www.youtube.com/@tagamerr" target="_blank" class="w-11 flex items-center justify-center rounded-xl border border-white/10 text-gray-400 hover:text-red-400 hover:bg-red-400/5 transition-all"><i class="ri-youtube-line text-lg"></i></a>
+                </div>
+            </div>
+
+            </div>
+
+        <div class="bg-[#111118] border border-white/5 rounded-2xl p-6 md:p-10 mb-8 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 blur-3xl rounded-full"></div>
+            <h2 class="text-white font-black text-xl mb-8 flex items-center gap-2">
+                <i class="ri-book-open-line text-cyan-400"></i>Hướng Dẫn Sử Dụng
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-xl border bg-cyan-500/10 border-cyan-500/20 text-cyan-400">
+                        <i class="ri-download-cloud-line text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-cyan-500/50 text-[10px] font-black font-mono tracking-tighter">STEP 01</span>
+                        <h3 class="text-white font-bold text-base mb-1">Tải Executor</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">Chọn bản phù hợp (PC/Mobile) và nhấn Tải Ngay.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-xl border bg-teal-500/10 border-teal-500/20 text-teal-400">
+                        <i class="ri-install-line text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-teal-500/50 text-[10px] font-black font-mono tracking-tighter">STEP 02</span>
+                        <h3 class="text-white font-bold text-base mb-1">Cài Đặt</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">Giải nén và chạy file setup. Tắt Anti-virus nếu cần.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-xl border bg-emerald-500/10 border-emerald-500/20 text-emerald-400">
+                        <i class="ri-terminal-box-line text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-emerald-500/50 text-[10px] font-black font-mono tracking-tighter">STEP 03</span>
+                        <h3 class="text-white font-bold text-base mb-1">Chạy Script</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">Mở game, dán script vào Executor và nhấn Execute.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 md:p-8 rounded-2xl border border-white/5 bg-white/[0.02] flex flex-col md:flex-row items-center justify-between gap-5">
+            <div class="text-center md:text-left">
+                <h3 class="text-white font-black text-xl mb-1">Cần hỗ trợ cài đặt?</h3>
+                <p class="text-gray-500 text-sm">Tham gia Discord để được hỗ trợ trực tiếp từ đội ngũ **ytbtagamer**.</p>
+            </div>
+            <div class="flex items-center gap-3 w-full md:w-auto">
+                <a href="https://discord.gg/dbVjXAazCU" target="_blank" class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#5865F2]/10 border border-[#5865F2]/30 text-[#7b8dff] hover:bg-[#5865F2]/20 transition-all text-sm font-bold">
+                    <i class="ri-discord-line"></i>Discord
+                </a>
+                <a href="#" class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-white transition-all text-sm font-bold shadow-lg shadow-cyan-500/20">
+                    <i class="ri-code-box-line"></i>Xem Script
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<footer class="bg-[#07070c] border-t border-white/5 pt-14 pb-8">
+    <div class="px-6 lg:px-12 max-w-screen-xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+            
+            <div>
+                <a class="flex items-center gap-2 mb-4 cursor-pointer" href="/">
+                    <div class="w-9 h-9 flex items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-purple-600">
+                        <img alt="Logo" class="w-full h-full object-cover" src="/image/logo.png">
+                    </div>
+                    <div>
+                        <span class="text-white font-black text-lg">TASCRIPTS</span>
+                    </div>
+                </a>
+                <p class="text-gray-500 text-sm leading-relaxed mb-5">
+                    Nền tảng chia sẻ script Roblox chuyên nghiệp. Script chất lượng cao, an toàn và được cập nhật liên tục bởi đội ngũ TAScripts.
+                </p>
+                <div class="flex items-center gap-3">
+                    <a href="https://www.youtube.com/@tagamerr" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-red-500/20 text-gray-400 hover:text-red-400 transition-all border border-white/5">
+                        <i class="ri-youtube-line text-lg"></i>
+                    </a>
+                    <a href="https://discord.gg/dbVjXAazCU" target="_blank" rel="noopener noreferrer" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-indigo-500/20 text-gray-400 hover:text-indigo-400 transition-all border border-white/5">
+                        <i class="ri-discord-line text-lg"></i>
+                    </a>
+                    <a href="#" class="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 hover:bg-sky-500/20 text-gray-400 hover:text-sky-400 transition-all border border-white/5">
+                        <i class="ri-twitter-x-line text-lg"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold text-sm mb-5 uppercase tracking-widest">Danh mục</h4>
+                <ul class="space-y-3">
+                    <li><a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer" href="#">Script Mới Nhất</a></li>
+                    <li><a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer" href="#">Script Phổ Biến</a></li>
+                    <li><a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer" href="#">Script Hot</a></li>
+                    <li><a class="text-gray-500 hover:text-cyan-400 text-sm transition-colors cursor-pointer" href="#">Yêu Cầu Script</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold text-sm mb-5 uppercase tracking-widest">Nhận Script Mới</h4>
+                <p class="text-gray-500 text-sm mb-4">Đăng ký để nhận thông báo ngay khi có script Blox Fruits, Arsenal... mới nhất.</p>
+                <div class="flex flex-col gap-2">
+                    <input type="email" placeholder="Email của bạn..." class="bg-white/5 border border-white/10 text-white text-sm px-3 py-2.5 rounded-lg focus:outline-none focus:border-cyan-500/50 placeholder-gray-600 w-full transition-all">
+                    <button class="w-full py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-400 hover:to-cyan-500 text-white text-sm font-bold transition-all cursor-pointer shadow-lg shadow-cyan-500/10">
+                        Đăng Ký Ngay
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p class="text-gray-600 text-xs">© 2026 TAScripts - All rights reserved. Chỉ dành cho mục đích giải trí.</p>
+            <div class="flex items-center gap-5">
+                <a href="#" class="text-gray-600 hover:text-gray-400 text-xs transition-colors">Điều Khoản</a>
+                <a href="#" class="text-gray-600 hover:text-gray-400 text-xs transition-colors">Bảo Mật</a>
+                <a href="#" class="text-gray-600 hover:text-gray-400 text-xs transition-colors">DMCA</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="js/auth.js"></script>
+<script src="js/database.js"></script>
+<script>
+// Hàm vẽ danh sách ra màn hình
+function displayExecutors(data) {
+    const container = document.getElementById('executors-container');
+    if (!container) return;
+
+    container.innerHTML = data.map(item => `
+        <div class="bg-[#0f1715]/80 border border-white/5 rounded-2xl p-5 flex flex-col gap-3 hover:border-cyan-500/30 transition-all">
+            <div class="flex justify-between items-start">
+                <div class="flex gap-3">
+                    <img src="${item.image}" class="w-12 h-12 rounded-xl object-cover border border-white/10">
+                    <div>
+                        <h2 class="text-white font-bold text-base">${item.name}</h2>
+                        <div class="flex gap-1 mt-1">
+                            <span class="text-[9px] px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-400 border border-cyan-500/20">${item.platform}</span>
+                            <span class="text-[9px] px-2 py-0.5 rounded bg-gray-500/20 text-gray-400 border border-white/10">${item.price}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span class="text-[10px] text-yellow-500 flex items-center gap-1">⭐ 5.0</span>
+                </div>
+            </div>
+
+            <p class="text-gray-400 text-xs line-clamp-2 min-h-[32px]">${item.desc || 'Công cụ hỗ trợ Roblox ổn định...'}</p>
+
+            <div class="grid grid-cols-2 gap-2 py-2 border-y border-white/5">
+                <div class="flex items-center gap-1.5 text-[10px] text-gray-400">
+                    <span class="text-cyan-500">✔</span> Hỗ trợ ${item.platform}
+                </div>
+                <div class="flex items-center gap-1.5 text-[10px] text-gray-400">
+                    <span class="text-cyan-500">✔</span> ${item.keySystem || 'No Key'}
+                </div>
+            </div>
+
+            <div class="flex gap-2">
+                <a href="${item.link}" class="flex-1 py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-center rounded-lg text-sm font-bold transition-all">Tải Ngay</a>
+                <button class="px-3 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-white transition-all">
+                    <i class="ri-youtube-line"></i>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Logic cho 3 nút lọc (Tất cả, PC, Mobile)
+// Logic cho 3 nút lọc (Tất cả, PC, Mobile)
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        // 1. Đổi màu nút Active (Giữ nguyên code cũ của bạn)
+        document.querySelectorAll('.filter-btn').forEach(b => {
+            b.classList.remove('bg-cyan-500', 'border-cyan-500', 'text-white', 'shadow-lg', 'shadow-cyan-500/20');
+            b.classList.add('border-white/10', 'bg-white/5', 'text-gray-400');
+        });
+        this.classList.remove('border-white/10', 'bg-white/5', 'text-gray-400');
+        this.classList.add('bg-cyan-500', 'border-cyan-500', 'text-white', 'shadow-lg', 'shadow-cyan-500/20');
+
+        // 2. Lọc dữ liệu thông minh
+        const filterValue = this.getAttribute('data-filter').toLowerCase();
+        
+        if (filterValue === 'all') {
+            displayExecutors(allExecutorsData);
+        } else if (filterValue === 'mobile') {
+            // Nếu bấm Mobile: Lọc những cái có chữ Android, iOS hoặc Mobile
+            const filtered = allExecutorsData.filter(item => {
+                const platform = item.platform.toLowerCase();
+                return platform === 'mobile' || platform === 'android' || platform === 'ios';
+            });
+            displayExecutors(filtered);
+        } else {
+            // Các trường hợp khác (như PC)
+            const filtered = allExecutorsData.filter(item => 
+                item.platform.toLowerCase() === filterValue
+            );
+            displayExecutors(filtered);
+        }
+    });
+});
+
+// Chạy hiển thị ngay khi mở trang
+// Gọi hàm này để khi vừa mở web là hiện ngay "Tất cả"
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof allExecutorsData !== 'undefined') {
+        displayExecutors(allExecutorsData);
+    }
+});
+</script>
+</body>
+</html>
