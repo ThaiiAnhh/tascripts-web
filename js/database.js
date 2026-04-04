@@ -1,6 +1,10 @@
-// ==========================================
-// 1. CẤU HÌNH HỆ THỐNG
-// ==========================================
+function getYouTubeID(url) {
+    if (!url || url === "#") return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+}
+
 let currentPage = 1;
 const scriptsPerPage = 6;
 const DATA_FILE = 'scripts-data.json';
@@ -9,6 +13,14 @@ const DATA_FILE = 'scripts-data.json';
 // 2. HÀM TẠO HTML CHO CARD SCRIPT (Giao diện chuẩn)
 // ==========================================
 function createScriptCard(s) {
+    // 0. Hàm bổ trợ lấy ID YouTube (để lấy thumbnail)
+    const getYTID = (url) => {
+        if (!url || url === "#") return null;
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    };
+
     // 1. Lấy ID (ưu tiên id số từ timestamp)
     const scriptId = s.id || s.ID || Date.now();
     
@@ -24,19 +36,31 @@ function createScriptCard(s) {
         .map(t => `<span class="px-2 py-0.5 rounded-full border border-white/10 text-[10px] text-gray-400">${t.trim()}</span>`)
         .join('');
 
-    // 4. XỬ LÝ ẢNH
-    let displayThumb = s.thumbnail || s.thumb || s.image || 'image/logo.png';
-    if (displayThumb !== 'image/logo.png' && !displayThumb.startsWith('http') && !displayThumb.startsWith('data:') && !displayThumb.startsWith('/')) {
-        displayThumb = 'image/' + displayThumb; 
+    // 4. XỬ LÝ ẢNH (Ưu tiên YouTube Thumbnail)
+    let displayThumb = s.thumbnail || s.thumb || s.image;
+    const ytId = getYTID(s.youtube);
+
+    // Nếu không có ảnh thủ công hoặc ảnh để trống, tự động lấy ảnh YouTube
+    if (!displayThumb || displayThumb === "" || displayThumb === "image/logo.png") {
+        if (ytId) {
+            displayThumb = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
+        } else {
+            displayThumb = 'image/logo.png';
+        }
+    } else {
+        // Nếu có ảnh thủ công, kiểm tra đường dẫn xem có phải link ngoài hay file nội bộ
+        if (!displayThumb.startsWith('http') && !displayThumb.startsWith('data:') && !displayThumb.startsWith('/')) {
+            displayThumb = 'image/' + displayThumb; 
+        }
     }
 
-    // 5. TRẢ VỀ HTML (Đã fix lỗi lặp code của bạn)
+    // 5. TRẢ VỀ HTML
     return `
     <div class="group bg-[#0f0f15] border border-white/5 rounded-2xl overflow-hidden hover:border-cyan-500/30 transition-all duration-300 flex flex-col h-full shadow-lg">
         <div class="relative aspect-video overflow-hidden bg-[#1a1a25]">
             <img src="${displayThumb}" 
                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                 onerror="this.onerror=null; this.src='image/logo.png';">
+                 onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${ytId}/hqdefault.jpg';">
             
             ${s.badge ? `<span class="absolute top-3 left-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-black px-2 py-0.5 rounded uppercase z-10">${s.badge}</span>` : ''}
             
@@ -65,7 +89,7 @@ function createScriptCard(s) {
             <div class="flex flex-wrap gap-1.5 mb-5">${tagsHTML}</div>
             
             <div class="flex items-center gap-2 mt-auto">
-                <a href="Scriptid.html?id=${scriptId}" class="btn-get-script">
+                <a href="Scriptid.html?id=${scriptId}" class="btn-get-script flex-1 text-center py-2 bg-cyan-500 text-black text-xs font-black rounded-lg hover:bg-cyan-400 transition-colors uppercase">
                     <i class="ri-code-s-slash-line"></i> GET SCRIPT
                 </a>
                 

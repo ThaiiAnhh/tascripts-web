@@ -177,77 +177,126 @@
         }
 
         document.addEventListener('DOMContentLoaded', async () => {
-            const scriptData = await getScriptDetail();
+    // 0. Hàm bổ trợ tách ID YouTube
+    const getYTID = (url) => {
+        if (!url || url === "#") return null;
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    };
 
-            if (!scriptData) {
-                // Xử lý lỗi nếu không thấy script...
-                return;
-            }
+    const scriptData = await getScriptDetail();
 
-            // 1. Hiển thị tiêu đề và Breadcrumb
-            document.getElementById('page-title').innerText = `${scriptData.name || scriptData.title} | TAScripts`;
-            document.getElementById('breadcrumb-game').innerText = scriptData.category || scriptData.game || "Roblox";
-            
-            // 2. Badge (HOT, NEW, VERIFIED)
-            const badgeEl = document.getElementById('script-badge');
-            badgeEl.innerText = scriptData.badge || 'New';
-            if(scriptData.badge === 'HOT') badgeEl.className = "bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded uppercase";
+    if (!scriptData) {
+        console.error("Không tìm thấy dữ liệu script");
+        return;
+    }
 
-            // 3. Thông tin chính
-            document.getElementById('script-title').innerText = scriptData.name || scriptData.title;
-            document.getElementById('script-views').innerText = (scriptData.downloads || 0).toLocaleString();
-            document.getElementById('script-rating').innerText = scriptData.rating || "5.0";
+    // 1. Hiển thị tiêu đề và Breadcrumb
+    document.getElementById('page-title').innerText = `${scriptData.name || scriptData.title} | TAScripts`;
+    document.getElementById('breadcrumb-game').innerText = scriptData.category || scriptData.game || "Roblox";
+    
+    // 2. Badge (HOT, NEW, VERIFIED)
+    const badgeEl = document.getElementById('script-badge');
+    if (badgeEl) {
+        badgeEl.innerText = scriptData.badge || 'New';
+        if(scriptData.badge === 'HOT') {
+            badgeEl.className = "bg-red-500 text-white text-[10px] font-black px-2 py-0.5 rounded uppercase";
+        }
+    }
 
-            // 4. XỬ LÝ ẢNH THUMBNAIL (Sửa lỗi ảnh không hiện)
-            let displayThumb = scriptData.thumbnail || scriptData.thumb || scriptData.image || 'image/background.jpg';
-            if (!displayThumb.startsWith('http') && !displayThumb.startsWith('data:') && !displayThumb.startsWith('/')) {
-                displayThumb = 'image/' + displayThumb; 
-            }
-            document.getElementById('script-banner').src = displayThumb;
+    // 3. Thông tin chính (Tiêu đề, lượt xem, rating)
+    document.getElementById('script-title').innerText = scriptData.name || scriptData.title;
+    document.getElementById('script-views').innerText = (scriptData.downloads || 0).toLocaleString();
+    document.getElementById('script-rating').innerText = scriptData.rating || "5.0";
 
-            // 5. NÚT GET SCRIPT NOW (Dẫn tới link tải)
-            const getBtn = document.getElementById('get-script-btn');
-            getBtn.href = scriptData.link || scriptData.getlink || "#";
+    // 4. XỬ LÝ ẢNH BANNER (Ưu tiên YouTube Thumbnail)
+    const ytId = getYTID(scriptData.youtube || scriptData.yt);
+    let displayThumb = scriptData.thumbnail || scriptData.thumb || scriptData.image;
+    
+    const bannerImg = document.getElementById('script-banner');
 
-            // 6. THỐNG KÊ CHI TIẾT (Hiện rõ nội dung)
-            document.getElementById('stat-game').innerText = scriptData.category || scriptData.game || "Roblox";
-            // Bạn có thể thêm các dòng thống kê khác ở đây nếu cần
+    if (!displayThumb || displayThumb === "" || displayThumb === "image/background.jpg") {
+        if (ytId) {
+            displayThumb = `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
+        } else {
+            displayThumb = 'image/background.jpg';
+        }
+    } else {
+        if (!displayThumb.startsWith('http') && !displayThumb.startsWith('data:') && !displayThumb.startsWith('/')) {
+            displayThumb = 'image/' + displayThumb; 
+        }
+    }
 
-            // 7. TÍNH NĂNG SCRIPT (Render Tags)
-            const features = scriptData.tags || ["No Key", "Auto Farm"];
-            document.getElementById('script-features').innerHTML = features.map(f => `
-                <div class="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10">
-                    <i class="ri-checkbox-circle-fill text-cyan-500 text-lg"></i>
-                    <span class="text-gray-300 font-medium">${f}</span>
-                </div>`).join('');
+    // Gán ảnh và xử lý lỗi/load
+    bannerImg.style.opacity = '0';
+    bannerImg.src = displayThumb;
+    bannerImg.onload = () => { bannerImg.style.opacity = '1'; };
+    bannerImg.onerror = function() {
+        if (ytId && !this.src.includes('hqdefault')) {
+            this.src = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+        } else {
+            this.src = 'image/background.jpg';
+        }
+        this.style.opacity = '1';
+    };
 
-            // 8. VIDEO HƯỚNG DẪN (YouTube)
-            const ytContainer = document.getElementById('youtube-preview');
-            const ytUrl = scriptData.youtube || scriptData.yt;
-            if (ytUrl && ytUrl !== "#") {
-                // Tách ID youtube từ link
-                let vId = ytUrl.includes('v=') ? ytUrl.split('v=')[1].split('&')[0] : ytUrl.split('/').pop();
-                
-                ytContainer.innerHTML = `
-                    <div class="relative w-full h-full">
-                        <img src="https://img.youtube.com/vi/${vId}/maxresdefault.jpg" class="w-full h-full object-cover">
-                        <a href="${ytUrl}" target="_blank" class="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/20 transition-all group">
-                            <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
-                                <i class="ri-play-fill text-white text-3xl"></i>
-                            </div>
-                        </a>
-                    </div>`;
-            } else {
-                ytContainer.innerHTML = `
-                    <div class="flex flex-col items-center justify-center h-full text-gray-600">
-                        <i class="ri-video-off-line text-3xl mb-2"></i>
-                        <p class="text-xs">Không có video hướng dẫn</p>
-                    </div>`;
-            }
+    // 5. NÚT GET SCRIPT NOW
+    const getBtn = document.getElementById('get-script-btn');
+    if (getBtn) {
+        getBtn.href = scriptData.link || scriptData.getlink || "#";
+    }
 
-            setupStars();
-            loadReviews();
-        });
+    // 6. THỐNG KÊ CHI TIẾT
+    document.getElementById('stat-game').innerText = scriptData.category || scriptData.game || "Roblox";
+    if (document.getElementById('stat-status')) {
+        document.getElementById('stat-status').innerText = scriptData.status || "Hoạt động tốt";
+    }
+    if (document.getElementById('stat-update')) {
+        const updateTime = scriptData.id ? new Date(scriptData.id).toLocaleDateString('vi-VN') : "Mới đây";
+        document.getElementById('stat-update').innerText = updateTime;
+    }
+
+    // 7. TÍNH NĂNG SCRIPT (Render Tags)
+    const features = scriptData.tags || ["No Key", "Auto Farm"];
+    const featuresContainer = document.getElementById('script-features');
+    if (featuresContainer) {
+        featuresContainer.innerHTML = features.map(f => `
+            <div class="flex items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10">
+                <i class="ri-checkbox-circle-fill text-cyan-500 text-lg"></i>
+                <span class="text-gray-300 font-medium">${f}</span>
+            </div>`).join('');
+    }
+
+    // 8. VIDEO HƯỚNG DẪN (YouTube Preview)
+    const ytContainer = document.getElementById('youtube-preview');
+    if (ytContainer) {
+        if (ytId) {
+            ytContainer.innerHTML = `
+                <div class="relative w-full h-full group">
+                    <img src="https://img.youtube.com/vi/${ytId}/maxresdefault.jpg" 
+                         class="w-full h-full object-cover"
+                         onerror="this.src='https://img.youtube.com/vi/${ytId}/hqdefault.jpg'">
+                    <a href="${scriptData.youtube || scriptData.yt}" target="_blank" 
+                       class="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/20 transition-all">
+                        <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
+                            <i class="ri-play-fill text-white text-3xl"></i>
+                        </div>
+                    </a>
+                </div>`;
+        } else {
+            ytContainer.innerHTML = `
+                <div class="flex flex-col items-center justify-center h-full text-gray-600 bg-white/5">
+                    <i class="ri-video-off-line text-3xl mb-2"></i>
+                    <p class="text-xs">Không có video hướng dẫn</p>
+                </div>`;
+        }
+    }
+
+    // Khởi tạo các thành phần khác
+    if (typeof setupStars === "function") setupStars();
+    if (typeof loadReviews === "function") loadReviews();
+});
     </script>
     <footer class="bg-[#07070c] border-t border-white/5 pt-14 pb-8">
     <div class="px-6 lg:px-12 max-w-screen-xl mx-auto">

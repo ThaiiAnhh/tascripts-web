@@ -414,31 +414,36 @@ if (searchTrigger && searchInput) {
         </div>
     </div>
 </footer>
-<script>
-    // Tự động gán sự kiện click cho mọi card script
-    document.addEventListener('click', function(e) {
-        // Kiểm tra xem người dùng có bấm vào card trong 2 container chứa script không
-        const scriptLink = e.target.closest('#all-scripts-container a, #featured-scripts-container a');
-        
-        if (scriptLink) {
-            // Tìm container chứa thông tin (card bài viết)
-            const card = scriptLink.closest('div.group'); 
-            if (!card) return;
-
-            // Bốc dữ liệu từ giao diện
-            const title = card.querySelector('h3') ? card.querySelector('h3').innerText : "Script Roblox";
-            const image = card.querySelector('img') ? card.querySelector('img').src : "";
-            const category = card.querySelector('span.bg-cyan-500\\/10') ? card.querySelector('span.bg-cyan-500\\/10').innerText : "Script";
-            const link = scriptLink.getAttribute('href');
-
-            // Gọi hàm lưu từ database.js
-            if (typeof saveToHistory === "function") {
-                saveToHistory(title, image, category, link);
-            }
-        }
-    });
-    </script>
 <script src="js/auth.js"></script>
+<script>
+document.addEventListener('click', function(e) {
+    const scriptLink = e.target.closest('#all-scripts-container a, #featured-scripts-container a');
+    
+    if (scriptLink) {
+        const card = scriptLink.closest('div.group'); 
+        if (!card) return;
+
+        // Bốc dữ liệu từ giao diện
+        const title = card.querySelector('h3') ? card.querySelector('h3').innerText : "Script Roblox";
+        
+        // Lấy ảnh đang hiển thị trên card
+        const imgTag = card.querySelector('img');
+        const image = imgTag ? imgTag.src : "image/logo.png";
+        
+        // Lấy category (sửa lại selector cho khớp với class của bạn)
+        const categoryTag = card.querySelector('span.text-cyan-400');
+        const category = categoryTag ? categoryTag.innerText : "Roblox";
+        
+        const link = scriptLink.getAttribute('href');
+
+        // Gọi hàm lưu vào lịch sử
+        if (typeof saveToHistory === "function") {
+            saveToHistory(title, image, category, link);
+        }
+    }
+});
+</script>
+
 <script src="js/database.js"></script>
 
 </body>
